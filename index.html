@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Space Runaway</title>
+
+	<!-- JAVASCRIPT LINKS -->
+	<script type="text/javascript" src="js/class.js"></script>
+	<!--
+	<script type="text/javascript" src="js/_____.js"></script>
+	<script type="text/javascript" src="js/_____.js"></script>
+	<script type="text/javascript" src="js/_____.js"></script>
+	<script type="text/javascript" src="js/_____.js"></script>
+	<script type="text/javascript" src="js/_____.js"></script>
+	-->
+
+	<!-- CSS LINK -->
+	<link rel="stylesheet" type="text/css" href="style.css">
+</head>
+
+<body onload="startGame()">
+
+<script>
+	function startGame() {
+		//entities.player = new Player("MISSING PLAYER IMAGE"); // Removed for now because no images
+		Game.start();
+	}
+
+	// Stolen partially from w3schools  >:D  (link on trello)
+	var Game = {
+		canvas : document.createElement("canvas"),
+		start : function() {
+			this.canvas.width = window.outerWidth-50;
+			this.canvas.height = window.innerHeight-40;
+			this.ctx = this.canvas.getContext("2d");
+			document.body.insertBefore(this.canvas, document.body.childNodes[0]);
+		},
+		clear : function() {
+			this.canvas.width = this.canvas.width;
+		}
+	}
+</script>
+
+</body>
+
+</html>
