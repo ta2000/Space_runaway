@@ -21,11 +21,10 @@
 
 <script>
 	function startGame() {
-		//entities.player = new Player("MISSING PLAYER IMAGE"); // Removed for now because no images
+		//entities.player = new Player("MISSING PLAYER IMAGE", 10, 10, 20); // Removed for now because no images
 		Game.start();
 	}
 
-	// Stolen partially from w3schools  >:D  (link on trello)
 	var Game = {
 		canvas : document.createElement("canvas"),
 		start : function() {
@@ -36,6 +35,11 @@
 		},
 		clear : function() {
 			this.canvas.width = this.canvas.width;
+		},
+		draw : function() {
+			for (var i in entities) {
+				entities[i].draw(Game.ctx);
+			}
 		}
 	}
 </script>

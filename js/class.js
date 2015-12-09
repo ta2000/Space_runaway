@@ -11,28 +11,16 @@ class Sprite {
 		this.y = y;
 	}
 
-	draw() {
+	draw( ctx ) {
 		ctx.drawImage(this.image, this.x, this.y);
 	}
 
 	collision( obj ) {
-		// Haven't tested, probably won't work
-		// Checks hitboxes rather than distance like in PQ
 		collided = false;
-		if ( (obj.x < (this.x+this.image.width)) && (obj.y < (this.y+this.image.height)) ) {
-			collided = true;
-		}
-		if ( (this.x < (obj.x+obj.image.width)) && (this.y < (obj.y+obj.image.height)) ) {
-			collided = true;
-		}
+		// Working collision detection code
 		return collided;
 	}
 
-	// Needed functions
-	/*
-	rotate(){}
-	
-	*/
 }
 
 // Check out inheritance link on trello if you don't understand this
@@ -49,8 +37,7 @@ class Player extends Sprite {
 		*/
 	}
 
-	// Put key handling here?
-	// Use ctx translate if >one screen levels
+	// Put key handling here
 }
 
 // Classes to add
