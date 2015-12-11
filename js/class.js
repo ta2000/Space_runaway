@@ -16,7 +16,7 @@ class Sprite {
 	}
 
 	collision( obj ) {
-		collided = false;
+		var collided = false;
 		if ( ((this.y > obj.y) && (this.y < obj.y+obj.image.height)) && (this.x < obj.x + obj.image.width) ) {	collided = true;	}
 		if ( ((this.y > obj.y) && (this.y < obj.y+obj.image.height)) && (this.x > obj.x) ) {					collided = true;	}
 		if ( ((this.x > obj.x) && (this.x < obj.x+obj.image.width)) && (this.y < obj.y) ) {						collided = true;	}
