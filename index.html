@@ -21,26 +21,54 @@
 
 <script>
 	function startGame() {
-		//entities.player = new Player("MISSING PLAYER IMAGE", 10, 10, 20); // Removed for now because no images
+		entities.player = new Player("images/_sprites/player.png", 10, 10, 30); // Removed for now because no images
 		Game.start();
 	}
 
 	var Game = {
+		level : 0,
 		canvas : document.createElement("canvas"),
 		start : function() {
 			this.canvas.width = window.outerWidth-50;
 			this.canvas.height = window.innerHeight-40;
 			this.ctx = this.canvas.getContext("2d");
 			document.body.insertBefore(this.canvas, document.body.childNodes[0]);
+			Game.draw();
+			// Key handling
+			window.onkeydown = this.key_down;
+			window.onkeyup = this.key_up;
 		},
 		clear : function() {
 			this.canvas.width = this.canvas.width;
 		},
 		draw : function() {
+			Game.clear();
+
 			for (var i in entities) {
 				entities[i].draw(Game.ctx);
+
+				if (entities[i].move!==undefined) {
+					entities[i].move();
+				}
+			}
+			window.requestAnimationFrame(Game.draw);
+		},
+		// Key handling
+		key_down : function(e) {
+			for (var i in entities) {
+				if (entities[i].keysDown!==undefined) {
+					entities[i].keysDown[e.keyCode]=true;
+				}
+			}
+		},
+		key_up : function(e) {
+			for (var i in entities) {
+				if (entities[i].keysDown!==undefined) {
+					delete entities[i].keysDown[e.keyCode];
+				}
 			}
 		}
+
 	}
 </script>
 
