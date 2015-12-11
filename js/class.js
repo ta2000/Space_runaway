@@ -17,7 +17,10 @@ class Sprite {
 
 	collision( obj ) {
 		collided = false;
-		// Working collision detection code
+		if ( ((this.y > obj.y) && (this.y < obj.y+obj.image.height)) && (this.x < obj.x + obj.image.width) ) {	collided = true;	}
+		if ( ((this.y > obj.y) && (this.y < obj.y+obj.image.height)) && (this.x > obj.x) ) {					collided = true;	}
+		if ( ((this.x > obj.x) && (this.x < obj.x+obj.image.width)) && (this.y < obj.y) ) {						collided = true;	}
+		if ( ((this.x > obj.x) && (this.x < obj.x+obj.image.width)) && (this.y > obj.y + obj.image.height) ) {	collided = true;	}
 		return collided;
 	}
 
@@ -33,22 +36,28 @@ class Player extends Sprite {
 	}
 
 	move() {
-		/*--W--*/
-		if ( 87 in this.keysDown ) {
-			this.y -= this.speed;
-		};
-		/*--A--*/
-		if ( 65 in this.keysDown ) {
-			this.x -= this.speed;
-		};
-		/*--S--*/
-		if ( 83 in this.keysDown ) {
-			this.y += this.speed;
-		};
-		/*--D--*/
-		if ( 68 in this.keysDown ) {
-			this.x += this.speed;
-		};
+		var canmove = true;
+		for (var i in entities) {
+			if (collision(entities[i])) { canmove=false }
+		}
+		if (canmove) {
+			/*--W--*/
+			if ( 87 in this.keysDown ) {
+				this.y -= this.speed;
+			};
+			/*--A--*/
+			if ( 65 in this.keysDown ) {
+				this.x -= this.speed;
+			};
+			/*--S--*/
+			if ( 83 in this.keysDown ) {
+				this.y += this.speed;
+			};
+			/*--D--*/
+			if ( 68 in this.keysDown ) {
+				this.x += this.speed;
+			};
+		}
 	}
 
 }
