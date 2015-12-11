@@ -16,14 +16,8 @@ class Sprite {
 	}
 
 	collision( obj ) {
-		var collided = true;
-
-		if (obj==this) {
-			collided=false;
-		}
-        if ((this.y + (this.height) < obj.y) || (this.y > obj.y + (obj.height)) || (this.x + (this.width) < obj.x) || (this.x > obj.x + (obj.width))) {
-           collided=false;
-        }
+		collided = false;
+		// Working collision detection code
 		return collided;
 	}
 
@@ -39,30 +33,22 @@ class Player extends Sprite {
 	}
 
 	move() {
-		var canmove = true;
-		for (var i in entities) {
-			if (this.collision(entities[i])) {
-				canmove=false;
-			}
-		}
-		if (canmove) {
-			/*--W--*/
-			if ( 87 in this.keysDown ) {
-				this.y -= this.speed;
-			};
-			/*--A--*/
-			if ( 65 in this.keysDown ) {
-				this.x -= this.speed;
-			};
-			/*--S--*/
-			if ( 83 in this.keysDown ) {
-				this.y += this.speed;
-			};
-			/*--D--*/
-			if ( 68 in this.keysDown ) {
-				this.x += this.speed;
-			};
-		}
+		/*--W--*/
+		if ( 87 in this.keysDown ) {
+			this.y -= this.speed;
+		};
+		/*--A--*/
+		if ( 65 in this.keysDown ) {
+			this.x -= this.speed;
+		};
+		/*--S--*/
+		if ( 83 in this.keysDown ) {
+			this.y += this.speed;
+		};
+		/*--D--*/
+		if ( 68 in this.keysDown ) {
+			this.x += this.speed;
+		};
 	}
 
 }
