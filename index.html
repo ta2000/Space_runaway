@@ -26,7 +26,7 @@
 	}
 
 	var Game = {
-		level : 1,
+		levelNum : 1,
 		canvas : document.createElement("canvas"),
 		start : function() {
 			this.canvas.width = window.outerWidth-50;
@@ -82,9 +82,9 @@
 					console.log(json);
 
 					var obj = {};
-					obj.board = JSON.parse(json);
+					obj = JSON.parse(json);
 					for (var i = 0; i < obj.board.length; i++) {
-						console.log(obj.board[i]);
+						console.log(obj.board[i].x + ", " + obj.board[i].y);
 					}
 				}
 			};
