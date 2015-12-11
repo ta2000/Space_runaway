@@ -64,11 +64,13 @@ class Goblin extends Sprite {
 class Wall extends Sprite {
 	constructor(img,x,y) {
 		super(img,x,y);
+		this.speed = 0;
 	}
 }
 
 class Portal extends Sprite {
 	constructor(img,x,y) {
 		super(img,x,y);
+		this.speed = 0;
 	}
 }
