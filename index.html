@@ -37,6 +37,8 @@
 			// Key handling
 			window.onkeydown = this.key_down;
 			window.onkeyup = this.key_up;
+			// Level
+			this.loadLevel(Game.level);
 		},
 		clear : function() {
 			this.canvas.width = this.canvas.width;
@@ -72,14 +74,21 @@
 		loadLevel : function(levelNum) {
 			// Gets level from server, can't get locally
 			var url = "levels/level" + levelNum + ".json";
+			var json;
 			var xhttp = new XMLHttpRequest();
 			xhttp.onreadystatechange = function() {
-			  if (xhttp.readyState == 4) {
-				console.log(xhttp.responseText);
-			  }
+				if (xhttp.readyState == 4) {
+					json = xhttp.responseText;
+				}
 			};
 			xhttp.open("GET", url, true);
 			xhttp.send();
+
+			var obj = {};
+			obj.board = JSON.parse(json);
+			for (var i = 0; i < obj.board.length; i++) {
+				console.log(obj.board[i]);
+			}
 		}
 
 	}
