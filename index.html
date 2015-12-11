@@ -21,12 +21,11 @@
 
 <script>
 	function startGame() {
-		entities.player = new Player("images/_sprites/player.png", 10, 10, 30); // Removed for now because no images
 		Game.start();
 	}
 
 	var Game = {
-		level : 1,
+		levelNum : 1,
 		canvas : document.createElement("canvas"),
 		start : function() {
 			this.canvas.width = window.outerWidth-50;
@@ -37,6 +36,8 @@
 			// Key handling
 			window.onkeydown = this.key_down;
 			window.onkeyup = this.key_up;
+			// Level
+			this.loadLevel(Game.levelNum);
 		},
 		clear : function() {
 			this.canvas.width = this.canvas.width;
@@ -71,12 +72,33 @@
 		// Level loading and parsing
 		loadLevel : function(levelNum) {
 			// Gets level from server, can't get locally
-			var url = "levels/level" + levelNum + ".JSON";
+			var url = "levels/level" + levelNum + ".json";
 			var xhttp = new XMLHttpRequest();
 			xhttp.onreadystatechange = function() {
-			  if (xhttp.readyState == 4) {
-				console.log(xhttp.responseText);
-			  }
+				if (xhttp.readyState == 4) {
+					var json = xhttp.responseText;
+
+					var obj = {};
+					obj = JSON.parse(json);
+					for (var i = 0; i < obj.board.length; i++) {
+						switch (obj.board[i].type) {
+							case 1:
+								entities['entity'+i] = new Player("images/sprites/player.png", obj.board[i].x*16, obj.board[i].y*16, 30);
+								break;
+							case 2:
+								entities['entity'+i] = new Goblin("images/sprites/space_goblin.png", obj.board[i].x*16, obj.board[i].y*16, 15);
+								break;
+							case 3:
+								entities['entity'+i] = new Wall("images/sprites/wall.png", obj.board[i].x*16, obj.board[i].y*16);
+								break;
+							case 4:
+								entities['entity'+i] = new Portal("images/sprites/portal.png", obj.board[i].x*16, obj.board[i].y*16);
+								break;
+							default:
+								console.log("Error loading tile: invalid type");
+						}
+					}
+				}
 			};
 			xhttp.open("GET", url, true);
 			xhttp.send();
