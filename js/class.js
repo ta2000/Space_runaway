@@ -27,22 +27,48 @@ class Sprite {
 class Player extends Sprite {
 	constructor(img,x,y,speed) {
 		super(img,x,y);
-		this.speed = speed;
+		this.speed = speed/10;
 		this.keysDown = {};
-		// Continue adding player traits here
-		/*
-		this.viewDist
-		this.ability
-		this.
-		*/
+		this.viewDist = 10;
 	}
 
-	// Put key handling here
+	move() {
+		/*--W--*/
+		if ( 87 in this.keysDown ) {
+			this.y -= this.speed;
+		};
+		/*--A--*/
+		if ( 65 in this.keysDown ) {
+			this.x -= this.speed;
+		};
+		/*--S--*/
+		if ( 83 in this.keysDown ) {
+			this.y += this.speed;
+		};
+		/*--D--*/
+		if ( 68 in this.keysDown ) {
+			this.x += this.speed;
+		};
+	}
+
 }
 
-// Classes to add
-/*
-	-Space Goblin
-	-
+class Goblin extends Sprite {
+	constructor(img,x,y,speed) {
+		super(img,x,y);
+		this.speed = speed/10;
+		this.viewDist = 10;
+	}
+}
 
-*/
+class Wall extends Sprite {
+	constructor(img,x,y) {
+		super(img,x,y);
+	}
+}
+
+class Portal extends Sprite {
+	constructor(img,x,y) {
+		super(img,x,y);
+	}
+}
