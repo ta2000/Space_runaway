@@ -38,7 +38,7 @@ class Player extends Sprite {
 	move() {
 		var canmove = true;
 		for (var i in entities) {
-			if (collision(entities[i])) { canmove=false }
+			if (this.collision(entities[i])) { canmove=false }
 		}
 		if (canmove) {
 			/*--W--*/
