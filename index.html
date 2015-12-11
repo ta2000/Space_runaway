@@ -71,7 +71,7 @@
 		// Level loading and parsing
 		loadLevel : function(levelNum) {
 			// Gets level from server, can't get locally
-			var url = "levels/level" + levelNum + ".JSON";
+			var url = "levels/level" + levelNum + ".json";
 			var xhttp = new XMLHttpRequest();
 			xhttp.onreadystatechange = function() {
 			  if (xhttp.readyState == 4) {
