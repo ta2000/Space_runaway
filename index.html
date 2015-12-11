@@ -21,7 +21,6 @@
 
 <script>
 	function startGame() {
-		entities.player = new Player("images/sprites/player.png", 10, 10, 30); // Removed for now because no images
 		Game.start();
 	}
 
@@ -79,11 +78,25 @@
 				if (xhttp.readyState == 4) {
 					var json = xhttp.responseText;
 
-					console.log(json);
-
 					var obj = {};
 					obj = JSON.parse(json);
 					for (var i = 0; i < obj.board.length; i++) {
+						switch (obj.board[i].type) {
+							case 1:
+								entities['entity'+i] = new Player("images/sprites/player.png", obj.board[i].x*16, obj.board[i].y*16, 30);
+								break;
+							case 2:
+								entities['entity'+i] = new Goblin("images/sprites/space_goblin.png", obj.board[i].x*16, obj.board[i].y*16, 15);
+								break;
+							case 3:
+								entities['entity'+i] = new Player("images/sprites/wall.png", obj.board[i].x*16, obj.board[i].y*16);
+								break;
+							case 4:
+								entities['entity'+i] = new Player("images/sprites/portal.png", obj.board[i].x*16, obj.board[i].y*16);
+								break;
+							default:
+								console.log("Error loading tile: invalid type");
+						}
 						console.log(obj.board[i].x + ", " + obj.board[i].y);
 					}
 				}
