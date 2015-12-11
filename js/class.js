@@ -16,12 +16,14 @@ class Sprite {
 	}
 
 	collision( obj ) {
-		var collided = false;
-		if ( ((this.y > obj.y) && (this.y < obj.y+obj.image.height)) && (this.x < obj.x + obj.image.width) ) {	collided = true;	}
-		if ( ((this.y > obj.y) && (this.y < obj.y+obj.image.height)) && (this.x > obj.x) ) {					collided = true;	}
-		if ( ((this.x > obj.x) && (this.x < obj.x+obj.image.width)) && (this.y < obj.y) ) {						collided = true;	}
-		if ( ((this.x > obj.x) && (this.x < obj.x+obj.image.width)) && (this.y > obj.y + obj.image.height) ) {	collided = true;	}
-		if (obj==this) {	collided=false;	console.log("obj = this")}
+		var collided = true;
+
+		if (obj==this) {
+			collided=false;
+		}
+        if ((this.y + (this.height) < otherobj.y) || (this.y > otherobj.y + (otherobj.height)) || (this.x + (this.width) < otherobj.x) || (this.x > otherobj.x + (otherobj.width))) {
+           collided=false;
+        }
 		return collided;
 	}
 
@@ -39,7 +41,9 @@ class Player extends Sprite {
 	move() {
 		var canmove = true;
 		for (var i in entities) {
-			if (this.collision(entities[i])) { canmove=false; console.log(i) }
+			if (this.collision(entities[i])) {
+				canmove=false;
+			}
 		}
 		if (canmove) {
 			/*--W--*/
