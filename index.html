@@ -74,23 +74,22 @@
 		loadLevel : function(levelNum) {
 			// Gets level from server, can't get locally
 			var url = "levels/level" + levelNum + ".json";
-			var json;
 			var xhttp = new XMLHttpRequest();
 			xhttp.onreadystatechange = function() {
 				if (xhttp.readyState == 4) {
-					json = xhttp.responseText;
+					var json = xhttp.responseText;
+
+					console.log(json);
+
+					var obj = {};
+					obj.board = JSON.parse(json);
+					for (var i = 0; i < obj.board.length; i++) {
+						console.log(obj.board[i]);
+					}
 				}
 			};
 			xhttp.open("GET", url, true);
 			xhttp.send();
-
-			console.log(json);
-
-			var obj = {};
-			obj.board = JSON.parse(json);
-			for (var i = 0; i < obj.board.length; i++) {
-				console.log(obj.board[i]);
-			}
 		}
 
 	}
