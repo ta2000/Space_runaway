@@ -21,7 +21,7 @@ class Sprite {
 		if (obj==this) {
 			collided=false;
 		}
-        if ((this.y + (this.height) < otherobj.y) || (this.y > otherobj.y + (otherobj.height)) || (this.x + (this.width) < otherobj.x) || (this.x > otherobj.x + (otherobj.width))) {
+        if ((this.y + (this.height) < obj.y) || (this.y > obj.y + (obj.height)) || (this.x + (this.width) < obj.x) || (this.x > obj.x + (obj.width))) {
            collided=false;
         }
 		return collided;
