@@ -26,7 +26,7 @@
 	}
 
 	var Game = {
-		level : 0,
+		level : 1,
 		canvas : document.createElement("canvas"),
 		start : function() {
 			this.canvas.width = window.outerWidth-50;
@@ -67,6 +67,19 @@
 					delete entities[i].keysDown[e.keyCode];
 				}
 			}
+		},
+		// Level loading and parsing
+		loadLevel : function(levelNum) {
+			// Gets level from server, can't get locally
+			var url = "levels/level" + levelNum + ".JSON";
+			var xhttp = new XMLHttpRequest();
+			xhttp.onreadystatechange = function() {
+			  if (xhttp.readyState == 4) {
+				console.log(xhttp.responseText);
+			  }
+			};
+			xhttp.open("GET", url, true);
+			xhttp.send();
 		}
 
 	}
