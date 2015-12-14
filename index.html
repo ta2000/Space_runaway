@@ -83,16 +83,16 @@
 					for (var i = 0; i < obj.board.length; i++) {
 						switch (obj.board[i].type) {
 							case 1:
-								entities['entity'+i] = new Player("images/sprites/player.png", obj.board[i].x*32+(Game.canvas.width/2.2), obj.board[i].y*32, 30);
+								entities['entity'+i] = new Player("images/sprites/player.png", obj.board[i].x*32+(Game.canvas.width/2.2), obj.board[i].y*32-(Game.canvas.height/1.2), 30);
 								break;
 							case 2:
-								entities['entity'+i] = new Goblin("images/sprites/space_goblin.png", obj.board[i].x*32+(Game.canvas.width/2.2), obj.board[i].y*32, 15);
+								entities['entity'+i] = new Goblin("images/sprites/space_goblin.png", obj.board[i].x*32+(Game.canvas.width/2.2), obj.board[i].y*32-(Game.canvas.height/1.2), 15);
 								break;
 							case 3:
-								entities['entity'+i] = new Wall("images/sprites/wall.png", obj.board[i].x*32+(Game.canvas.width/2.2), obj.board[i].y*32);
+								entities['entity'+i] = new Wall("images/sprites/wall.png", obj.board[i].x*32+(Game.canvas.width/2.2), obj.board[i].y*32-(Game.canvas.height/1.2));
 								break;
 							case 4:
-								entities['entity'+i] = new Portal("images/sprites/portal.png", obj.board[i].x*32+(Game.canvas.width/2.2), obj.board[i].y*32);
+								entities['entity'+i] = new Portal("images/sprites/portal.png", obj.board[i].x*32+(Game.canvas.width/2.2), obj.board[i].y*32-(Game.canvas.height/1.2));
 								break;
 							default:
 								console.log("Error loading tile: invalid type");
