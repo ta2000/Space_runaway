@@ -35,19 +35,23 @@ class Player extends Sprite {
 	move() {
 		/*--W--*/
 		if ( 87 in this.keysDown ) {
-			this.y -= this.speed;
+			ctx.translate(0, this.speed);
+			this.y-=this.speed;
 		};
 		/*--A--*/
 		if ( 65 in this.keysDown ) {
-			this.x -= this.speed;
+			ctx.translate(this.speed, 0);
+			this.x-=this.speed;
 		};
 		/*--S--*/
 		if ( 83 in this.keysDown ) {
-			this.y += this.speed;
+			ctx.translate(0, 0-this.speed);
+			this.y+=this.speed;
 		};
 		/*--D--*/
 		if ( 68 in this.keysDown ) {
-			this.x += this.speed;
+			ctx.translate(0-this.speed, 0);
+			this.x+=this.speed;
 		};
 	}
 
