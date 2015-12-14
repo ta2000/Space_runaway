@@ -32,7 +32,7 @@ class Player extends Sprite {
 		this.viewDist = 10;
 	}
 
-	move() {
+	move(ctx) {
 		/*--W--*/
 		if ( 87 in this.keysDown ) {
 			ctx.translate(0, this.speed);
