@@ -34,27 +34,25 @@ class Player extends Sprite {
 		this.viewDist = 10;
 	}
 
-	playerNum : entityCount(entities, Player);
-
 	move(ctx) {
 		/*--W--*/
 		if ( 87 in this.keysDown ) {
-			ctx.translate(0, this.speed/this.playerNum);
+			ctx.translate(0, this.speed/2);
 			this.y-=this.speed;
 		};
 		/*--A--*/
 		if ( 65 in this.keysDown ) {
-			ctx.translate(this.speed/this.playerNum, 0);
+			ctx.translate(this.speed/2, 0);
 			this.x-=this.speed;
 		};
 		/*--S--*/
 		if ( 83 in this.keysDown ) {
-			ctx.translate(0, 0-this.speed/this.playerNum);
+			ctx.translate(0, 0-this.speed/2);
 			this.y+=this.speed;
 		};
 		/*--D--*/
 		if ( 68 in this.keysDown ) {
-			ctx.translate(0-this.speed/this.playerNum, 0);
+			ctx.translate(0-this.speed/2, 0);
 			this.x+=this.speed;
 		};
 	}
