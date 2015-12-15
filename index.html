@@ -41,12 +41,6 @@
 			window.onkeyup = this.key_up;
 			// Level
 			this.loadLevel(Game.levelNum);
-			// Set the view on the player
-			for (var i in entities) {
-				if (entities[i].constructor==Player) {
-					setView(entities[i]);
-				}
-			}
 		},
 		clear : function() {
 			Game.ctx.clearRect(entities.origin.x,entities.origin.y,Game.canvas.width,Game.canvas.height);
@@ -112,6 +106,13 @@
 			};
 			xhttp.open("GET", url, true);
 			xhttp.send();
+
+			// Set the view on the player
+			for (var i in entities) {
+				if (entities[i].constructor==Player) {
+					setView(entities[i]);
+				}
+			}
 		}
 	}
 </script>
