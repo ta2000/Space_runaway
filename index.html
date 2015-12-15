@@ -102,17 +102,16 @@
 								console.log("Error loading tile: invalid type");
 						}
 					}
+					// Set the view on the player
+					for (var i in entities) {
+						if (entities[i].constructor==Player) {
+							setView(entities[i]);
+						}
+					}
 				}
 			};
 			xhttp.open("GET", url, true);
 			xhttp.send();
-
-			// Set the view on the player
-			for (var i in entities) {
-				if (entities[i].constructor==Player) {
-					setView(entities[i]);
-				}
-			}
 		}
 	}
 </script>
