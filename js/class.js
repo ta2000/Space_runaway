@@ -12,7 +12,9 @@ class Sprite {
 	}
 
 	draw( ctx ) {
-		ctx.drawImage(this.image, this.x, this.y);
+		if (this.image.src!="") {
+			ctx.drawImage(this.image, this.x, this.y);
+		};
 	}
 
 	collision( obj ) {
@@ -25,9 +27,9 @@ class Sprite {
 
 // Check out inheritance link on trello if you don't understand this
 class Player extends Sprite {
-	constructor(img,x,y,speed) {
+	constructor(img,x,y) {
 		super(img,x,y);
-		this.speed = speed/10;
+		this.speed = 3;
 		this.keysDown = {};
 		this.viewDist = 10;
 	}
@@ -35,22 +37,22 @@ class Player extends Sprite {
 	move(ctx) {
 		/*--W--*/
 		if ( 87 in this.keysDown ) {
-			ctx.translate(0, this.speed);
+			ctx.translate(0, this.speed/entityCount(entities, Player));
 			this.y-=this.speed;
 		};
 		/*--A--*/
 		if ( 65 in this.keysDown ) {
-			ctx.translate(this.speed, 0);
+			ctx.translate(this.speed/entityCount(entities, Player), 0);
 			this.x-=this.speed;
 		};
 		/*--S--*/
 		if ( 83 in this.keysDown ) {
-			ctx.translate(0, 0-this.speed);
+			ctx.translate(0, 0-this.speed/entityCount(entities, Player));
 			this.y+=this.speed;
 		};
 		/*--D--*/
 		if ( 68 in this.keysDown ) {
-			ctx.translate(0-this.speed, 0);
+			ctx.translate(0-this.speed/entityCount(entities, Player), 0);
 			this.x+=this.speed;
 		};
 	}
@@ -58,9 +60,9 @@ class Player extends Sprite {
 }
 
 class Goblin extends Sprite {
-	constructor(img,x,y,speed) {
+	constructor(img,x,y) {
 		super(img,x,y);
-		this.speed = speed/10;
+		this.speed = 1.5;
 		this.viewDist = 10;
 	}
 }

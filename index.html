@@ -5,6 +5,7 @@
 
 	<!-- JAVASCRIPT LINKS -->
 	<script type="text/javascript" src="js/class.js"></script>
+	<script type="text/javascript" src="js/entityCount.js"></script>
 	<!--
 	<script type="text/javascript" src="js/_____.js"></script>
 	<script type="text/javascript" src="js/_____.js"></script>
@@ -31,6 +32,9 @@
 			this.canvas.height = window.innerHeight-40;
 			this.ctx = this.canvas.getContext("2d");
 			document.body.insertBefore(this.canvas, document.body.childNodes[0]);
+			// Origin
+			entities.origin = new Player("",0,0);
+			// Draw
 			Game.draw();
 			// Key handling
 			window.onkeydown = this.key_down;
@@ -39,7 +43,7 @@
 			this.loadLevel(Game.levelNum);
 		},
 		clear : function() {
-			this.ctx.clearRect(0,0,this.canvas.width,this.canvas.height);
+			Game.ctx.clearRect(entities.origin.x,entities.origin.y,Game.canvas.width,Game.canvas.height);
 		},
 		draw : function() {
 			Game.clear();
@@ -83,10 +87,10 @@
 					for (var i = 0; i < obj.board.length; i++) {
 						switch (obj.board[i].type) {
 							case 1:
-								entities['entity'+i] = new Player("images/sprites/player.png", obj.board[i].x*32+(Game.canvas.width/2.2), obj.board[i].y*32-(Game.canvas.height/1.2), 30);
+								entities['entity'+i] = new Player("images/sprites/player.png", obj.board[i].x*32+(Game.canvas.width/2.2), obj.board[i].y*32-(Game.canvas.height/1.2));
 								break;
 							case 2:
-								entities['entity'+i] = new Goblin("images/sprites/space_goblin.png", obj.board[i].x*32+(Game.canvas.width/2.2), obj.board[i].y*32-(Game.canvas.height/1.2), 15);
+								entities['entity'+i] = new Goblin("images/sprites/space_goblin.png", obj.board[i].x*32+(Game.canvas.width/2.2), obj.board[i].y*32-(Game.canvas.height/1.2));
 								break;
 							case 3:
 								entities['entity'+i] = new Wall("images/sprites/wall.png", obj.board[i].x*32+(Game.canvas.width/2.2), obj.board[i].y*32-(Game.canvas.height/1.2));
