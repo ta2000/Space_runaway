@@ -6,13 +6,6 @@
 	<!-- JAVASCRIPT LINKS -->
 	<script type="text/javascript" src="js/class.js"></script>
 	<script type="text/javascript" src="js/setView.js"></script>
-	<!--
-	<script type="text/javascript" src="js/_____.js"></script>
-	<script type="text/javascript" src="js/_____.js"></script>
-	<script type="text/javascript" src="js/_____.js"></script>
-	<script type="text/javascript" src="js/_____.js"></script>
-	<script type="text/javascript" src="js/_____.js"></script>
-	-->
 
 	<!-- CSS LINK -->
 	<link rel="stylesheet" type="text/css" href="style.css">
@@ -26,10 +19,11 @@
 	}
 	var Game = {
 		levelNum : 1,
+		scale : 32,
 		canvas : document.createElement("canvas"),
 		start : function() {
-			this.canvas.width = window.outerWidth-50;
-			this.canvas.height = window.innerHeight-40;
+			this.canvas.width = 1280;
+			this.canvas.height = 720;
 			this.ctx = this.canvas.getContext("2d");
 			document.body.insertBefore(this.canvas, document.body.childNodes[0]);
 			// Origin
@@ -87,16 +81,16 @@
 					for (var i = 0; i < obj.board.length; i++) {
 						switch (obj.board[i].type) {
 							case 1:
-								entities['entity'+i] = new Player("images/sprites/player.png", obj.board[i].x*32+(Game.canvas.width/2.2), obj.board[i].y*32-(Game.canvas.height/1.2));
+								entities['entity'+i] = new Player("images/sprites/player.png", (obj.board[i].x*Game.scale), (obj.board[i].y*Game.scale));
 								break;
 							case 2:
-								entities['entity'+i] = new Goblin("images/sprites/space_goblin.png", obj.board[i].x*32+(Game.canvas.width/2.2), obj.board[i].y*32-(Game.canvas.height/1.2));
+								entities['entity'+i] = new Goblin("images/sprites/space_goblin.png", (obj.board[i].x*Game.scale), (obj.board[i].y*Game.scale));
 								break;
 							case 3:
-								entities['entity'+i] = new Wall("images/sprites/wall.png", obj.board[i].x*32+(Game.canvas.width/2.2), obj.board[i].y*32-(Game.canvas.height/1.2));
+								entities['entity'+i] = new Wall("images/sprites/wall.png", (obj.board[i].x*Game.scale), (obj.board[i].y*Game.scale));
 								break;
 							case 4:
-								entities['entity'+i] = new Portal("images/sprites/portal.png", obj.board[i].x*32+(Game.canvas.width/2.2), obj.board[i].y*32-(Game.canvas.height/1.2));
+								entities['entity'+i] = new Portal("images/sprites/portal.png", (obj.board[i].x*Game.scale), (obj.board[i].y*Game.scale));
 								break;
 							default:
 								console.log("Error loading tile: invalid type");
