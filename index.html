@@ -26,20 +26,21 @@
 			this.canvas.height = window.innerHeight;
 			this.ctx = this.canvas.getContext("2d");
 			document.body.insertBefore(this.canvas, document.body.childNodes[0]);
-			// Origin
-			entities.origin = new Player("",0,0);
-			// Draw
-			Game.draw();
+			// View
+			this.view = new View();
 			// Key handling
 			window.onkeydown = this.key_down;
 			window.onkeyup = this.key_up;
 			// Level
 			this.loadLevel(Game.levelNum);
+			// Draw
+			Game.draw();
 		},
 		clear : function() {
-			Game.ctx.clearRect(entities.origin.x,entities.origin.y,Game.canvas.width,Game.canvas.height);
+			Game.view.clearScreen(Game.ctx);
 		},
 		draw : function() {
+			Game.view.setPos();
 			Game.clear();
 			for (var i in entities) {
 				if (entities[i].move!==undefined) {
@@ -81,7 +82,7 @@
 					for (var i = 0; i < obj.board.length; i++) {
 						switch (obj.board[i].type) {
 							case 1:
-								entities['entity'+i] = new Player("images/sprites/player.png", (obj.board[i].x*Game.scale), (obj.board[i].y*Game.scale));
+								entities['player'] = new Player("images/sprites/player.png", (obj.board[i].x*Game.scale), (obj.board[i].y*Game.scale));
 								break;
 							case 2:
 								entities['entity'+i] = new Goblin("images/sprites/space_goblin.png", (obj.board[i].x*Game.scale), (obj.board[i].y*Game.scale));
@@ -102,6 +103,8 @@
 							setView(entities[i]);
 						}
 					}
+					Game.view.setFollowing( entities.player );
+
 				}
 			};
 			xhttp.open("GET", url, true);

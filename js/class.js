@@ -2,8 +2,31 @@
 
 var entities = {};
 
+class View {
+	constructor() {
+		this.x = 0;
+		this.y = 0;
+	}
+
+	setFollowing( following ) {
+		this.following = following;
+		this.distX = this.x - following.x;
+		this.distY = this.y - following.y;
+	}
+
+	setPos() {
+		if (this.following!=undefined) {
+			this.x = this.following.x + this.distX;
+			this.y = this.following.y + this.distY;
+		}
+	}
+
+	clearScreen( ctx ) {
+		ctx.clearRect(this.x, this.y, Game.canvas.width, Game.canvas.height);
+	}
+}
+
 class Sprite {
-	// Add depth property to Sprite class? (to draw sprites in proper order) (ur welcome Nes lol)
 	constructor(img,x,y) {
 		this.image = new Image();
 		this.image.src = img;
@@ -25,7 +48,6 @@ class Sprite {
 
 }
 
-// Check out inheritance link on trello if you don't understand this
 class Player extends Sprite {
 	constructor(img,x,y) {
 		super(img,x,y);
@@ -37,22 +59,22 @@ class Player extends Sprite {
 	move(ctx) {
 		/*--W--*/
 		if ( 87 in this.keysDown ) {
-			ctx.translate(0, this.speed/2);
+			ctx.translate(0, this.speed);
 			this.y-=this.speed;
 		};
 		/*--A--*/
 		if ( 65 in this.keysDown ) {
-			ctx.translate(this.speed/2, 0);
+			ctx.translate(this.speed, 0);
 			this.x-=this.speed;
 		};
 		/*--S--*/
 		if ( 83 in this.keysDown ) {
-			ctx.translate(0, 0-this.speed/2);
+			ctx.translate(0, 0-this.speed);
 			this.y+=this.speed;
 		};
 		/*--D--*/
 		if ( 68 in this.keysDown ) {
-			ctx.translate(0-this.speed/2, 0);
+			ctx.translate(0-this.speed, 0);
 			this.x+=this.speed;
 		};
 	}
