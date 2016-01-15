@@ -20,7 +20,7 @@ class Sprite {
 
 	collision( obj ) {
 		var collided = false;
-	
+
 		if (this.x < obj.x + obj.image.width &&
 			this.x + this.image.width > obj.x &&
 			this.y < obj.y + obj.image.height &&
@@ -57,12 +57,12 @@ class Player extends Sprite {
 		for (var i in entities) {
 			if (this.distance(entities[i]) <= this.viewDist) {
 				if (entities[i].alpha < 1) { entities[i].alpha+=0.08; };
-		
+
 				this.visibleObjs.push(entities[i]);
 			} else {
 				if (entities[i].alpha > 0) {
-					entities[i].alpha -= 0.01;
-				} else  if (entities[i].alpha < 0) {
+					entities[i].alpha -= 0.08;
+				} else {
 					entities[i].alpha = 0;
 				}
 			}

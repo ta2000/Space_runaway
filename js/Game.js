@@ -23,13 +23,13 @@ var Game = {
 		for (var i in entities) {
 			if (entities[i].move!==undefined) {
 				entities[i].move(Game.ctx);
-				Game.ctx.drawImage(Game.canvas, 0, 0);
 			}
 		}
-		Game.clear();
 		try {
-			for (var i=0; i<entities.player.visibleObjs.length; i++) {
-				entities.player.visibleObjs[i].draw(Game.ctx);
+			for (var i in entities) {
+				if (entities[i].alpha > 0) {
+					entities[i].draw(Game.ctx);
+				}
 			}
 		} catch (err) {};
 		window.requestAnimationFrame(Game.draw);
