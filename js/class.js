@@ -62,8 +62,9 @@ class Player extends Sprite {
 			} else {
 				if (entities[i].alpha > 0) {
 					entities[i].alpha -= 0.08;
-				} else {
-					entities[i].alpha = 0;
+					if (entities[i].alpha < 0) {
+						entities[i].alpha = 0;
+					}
 				}
 			}
 		}

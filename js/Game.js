@@ -27,9 +27,7 @@ var Game = {
 		}
 		try {
 			for (var i in entities) {
-				if (entities[i].alpha > 0) {
-					entities[i].draw(Game.ctx);
-				}
+				entities[i].draw(Game.ctx);
 			}
 		} catch (err) {};
 		window.requestAnimationFrame(Game.draw);
