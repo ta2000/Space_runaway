@@ -8,11 +8,14 @@ class Sprite {
 		this.image.src = img;
 		this.x = x;
 		this.y = y;
+		this.alpha = 0;
 		this.solid = false;
 	}
 
 	draw( ctx ) {
+		ctx.globalAlpha = this.alpha;
 		ctx.drawImage(this.image, this.x, this.y);
+		ctx.globalAlpha = 1;
 	}
 
 	collision( obj ) {
@@ -28,6 +31,14 @@ class Sprite {
 		return collided;
 	}
 
+	distance( obj ) {
+		var dx 	= Math.abs(this.x - obj.x)
+		var dy 	= Math.abs(this.y - obj.y);
+		var hyp	= Math.sqrt( (dx*dx)+(dy*dy) );
+
+		return hyp;
+	}
+
 }
 
 class Player extends Sprite {
@@ -35,34 +46,54 @@ class Player extends Sprite {
 		super(img,x,y);
 		this.speed = 3;
 		this.keysDown = {};
-		this.viewDist = 10;
+		this.direction = 90;
+		this.viewDist = 160;
 		this.visibleObjs = [];
 	}
 
 	getVisibleObjs() {
+		this.visibleObjs = [];
+		this.visibleObjs.push(this);
+		for (var i in entities) {
+			if (this.distance(entities[i]) <= this.viewDist) {
+				if (entities[i].alpha < 1) { entities[i].alpha+=0.08; };
 		
+				this.visibleObjs.push(entities[i]);
+			} else {
+				if (entities[i].alpha > 0) {
+					entities[i].alpha -= 0.01;
+				} else  if (entities[i].alpha < 0) {
+					entities[i].alpha = 0;
+				}
+			}
+		}
 	}
 
 	move(ctx) {
+		this.getVisibleObjs();
 		/*--W--*/
 		if ( 87 in this.keysDown ) {
 			for (var i in entities) { entities[i].y+=this.speed }
 			this.y-=this.speed;
+			this.direction = 360;
 		};
 		/*--A--*/
 		if ( 65 in this.keysDown ) {
 			for (var i in entities) { entities[i].x+=this.speed }
 			this.x-=this.speed;
+			this.direction = 270;
 		};
 		/*--S--*/
 		if ( 83 in this.keysDown ) {
 			for (var i in entities) { entities[i].y-=this.speed }
 			this.y+=this.speed;
+			this.direction = 180;
 		};
 		/*--D--*/
 		if ( 68 in this.keysDown ) {
 			for (var i in entities) { entities[i].x-=this.speed }
 			this.x+=this.speed;
+			this.direction = 90;
 		};
 
 		// Collision

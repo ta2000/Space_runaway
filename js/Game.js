@@ -27,9 +27,11 @@ var Game = {
 			}
 		}
 		Game.clear();
-		for (var i in entities) {
-			entities[i].draw(Game.ctx);
-		}
+		try {
+			for (var i=0; i<entities.player.visibleObjs.length; i++) {
+				entities.player.visibleObjs[i].draw(Game.ctx);
+			}
+		} catch (err) {};
 		window.requestAnimationFrame(Game.draw);
 	},
 	// Key handling
