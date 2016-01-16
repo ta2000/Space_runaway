@@ -10,10 +10,33 @@ var Game = {
 		// Key handling
 		window.onkeydown = this.key_down;
 		window.onkeyup = this.key_up;
+		// Device orientation
+		if (window.DeviceOrientationEvent) {
+			window.addEventListener('deviceorientation', function(eventData) {
+				var tiltLR = eventData.gamma;
+				var tiltFB = eventData.beta;
+				if ( typeof Game.original_tiltFB === "undefined" ) {
+					Game.original_tiltFB = eventData.beta;
+				}
+				var dir = eventData.alpha
+				Game.deviceOrientationHandler(tiltLR, tiltFB, dir);
+				}, false);
+		}
 		// Level
 		this.loadLevel(Game.levelNum);
 		// Draw
 		Game.draw();
+	},
+	deviceOrientationHandler : function(tiltLR, tiltFB, dir) {
+		try {
+			for ( key in entities.player.keysDown ) {
+				delete entities.player.keysDown[ key ];
+			}
+			if ( tiltLR < -5 ) { entities.player.keysDown[65] = true; }
+			else if ( tiltLR > 5 ) { entities.player.keysDown[68] = true; }
+			else if ( ( tiltFB - game.original_tiltFB ) < -5 ) { entities.player.keysDown[87] = true; }
+			else if ( ( tiltFB - game.original_tiltFB ) > 5 ) { entities.player.keysDown[83] = true; }
+		} catch (err) {};
 	},
 	clear : function() {
 		Game.ctx.clearRect(0, 0, Game.canvas.width, Game.canvas.height);
