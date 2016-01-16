@@ -34,8 +34,8 @@ var Game = {
 			}
 			if ( tiltLR < -5 ) { entities.player.keysDown[65] = true; }
 			else if ( tiltLR > 5 ) { entities.player.keysDown[68] = true; }
-			else if ( ( tiltFB - game.original_tiltFB ) < -5 ) { entities.player.keysDown[87] = true; }
-			else if ( ( tiltFB - game.original_tiltFB ) > 5 ) { entities.player.keysDown[83] = true; }
+			else if ( tiltFB  < -5 ) { entities.player.keysDown[87] = true; }
+			else if ( tiltFB > 5 ) { entities.player.keysDown[83] = true; }
 		} catch (err) {};
 	},
 	clear : function() {
