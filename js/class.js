@@ -8,14 +8,25 @@ class Sprite {
 		this.image.src = img;
 		this.x = x;
 		this.y = y;
-		this.alpha = 0;
 		this.solid = false;
 	}
 
 	draw( ctx ) {
-		ctx.globalAlpha = this.alpha;
 		ctx.drawImage(this.image, this.x, this.y);
-		ctx.globalAlpha = 1;
+	}
+
+	drawMinimap( ctx ) {
+		// Draw onto minimap
+		var xDist = this.x - entities.player.x;
+		var yDist = this.y - entities.player.y;
+
+		if (this.color!==undefined) {
+			ctx.fillStyle = this.color;
+		} else { ctx.fillStyle = "black"; }
+
+		if (this.primitiveDistance(minimap.x+xDist/5, minimap.y+yDist/5, minimap.x, minimap.y) <= minimap.r*2.1) {
+			ctx.fillRect(minimap.x+xDist/10, minimap.y+yDist/10, 3.2, 3.2);
+		}
 	}
 
 	collision( obj ) {
@@ -39,6 +50,14 @@ class Sprite {
 		return hyp;
 	}
 
+	primitiveDistance( x1, y1, x2, y2 ) {
+		var dx 	= Math.abs(x1 - x2)
+		var dy 	= Math.abs(y1 - y2);
+		var hyp	= Math.sqrt( (dx*dx)+(dy*dy) );
+
+		return hyp;
+	}
+
 }
 
 class Player extends Sprite {
@@ -51,27 +70,7 @@ class Player extends Sprite {
 		this.visibleObjs = [];
 	}
 
-	getVisibleObjs() {
-		this.visibleObjs = [];
-		this.visibleObjs.push(this);
-		for (var i in entities) {
-			if (this.distance(entities[i]) <= this.viewDist) {
-				if (entities[i].alpha < 1) { entities[i].alpha+=0.08; };
-
-				this.visibleObjs.push(entities[i]);
-			} else {
-				if (entities[i].alpha > 0) {
-					entities[i].alpha -= 0.08;
-					if (entities[i].alpha < 0) {
-						entities[i].alpha = 0;
-					}
-				}
-			}
-		}
-	}
-
 	move(ctx) {
-		this.getVisibleObjs();
 		/*--W--*/
 		if ( 87 in this.keysDown ) {
 			for (var i in entities) { entities[i].y+=this.speed }

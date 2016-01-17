@@ -43,16 +43,21 @@ var Game = {
 	},
 	draw : function() {
 		Game.clear();
-		for (var i in entities) {
-			if (entities[i].move!==undefined) {
-				entities[i].move(Game.ctx);
-			}
-		}
+
 		try {
+			for (var i in entities) {
+				if (entities[i].move!==undefined) {
+					entities[i].move(Game.ctx);
+				}
+			}
 			for (var i in entities) {
 				entities[i].draw(Game.ctx);
 			}
 		} catch (err) {};
+
+		// Minimap
+		minimap.draw(Game.ctx);
+
 		window.requestAnimationFrame(Game.draw);
 	},
 	// Key handling
@@ -84,15 +89,19 @@ var Game = {
 					switch (obj.board[i].type) {
 						case 1:
 							entities['player'] = new Player("images/sprites/player.png", (obj.board[i].x*Game.scale), (obj.board[i].y*Game.scale));
+							entities['player'].color = "green";
 							break;
 						case 2:
 							entities['entity'+i] = new Goblin("images/sprites/space_goblin.png", (obj.board[i].x*Game.scale), (obj.board[i].y*Game.scale));
+							entities['entity'+i].color = "red";
 							break;
 						case 3:
 							entities['entity'+i] = new Wall("images/sprites/wall.png", (obj.board[i].x*Game.scale), (obj.board[i].y*Game.scale));
+							entities['entity'+i].color = "teal";
 							break;
 						case 4:
 							entities['entity'+i] = new Portal("images/sprites/portal.png", (obj.board[i].x*Game.scale), (obj.board[i].y*Game.scale));
+							entities['entity'+i].color = "purple";
 							break;
 						default:
 							console.log("Error loading tile: invalid type");
