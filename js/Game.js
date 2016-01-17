@@ -44,6 +44,7 @@ var Game = {
 	draw : function() {
 		Game.clear();
 
+		// Entities
 		try {
 			for (var i in entities) {
 				if (entities[i].move!==undefined) {
@@ -97,7 +98,7 @@ var Game = {
 							break;
 						case 3:
 							entities['entity'+i] = new Wall("images/sprites/wall.png", (obj.board[i].x*Game.scale), (obj.board[i].y*Game.scale));
-							entities['entity'+i].color = "teal";
+							entities['entity'+i].color = "blue";
 							break;
 						case 4:
 							entities['entity'+i] = new Portal("images/sprites/portal.png", (obj.board[i].x*Game.scale), (obj.board[i].y*Game.scale));

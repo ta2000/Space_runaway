@@ -8,7 +8,7 @@ class Sprite {
 		this.image.src = img;
 		this.x = x;
 		this.y = y;
-		this.solid = false;
+		this.solid = true;
 	}
 
 	draw( ctx ) {
@@ -25,26 +25,28 @@ class Sprite {
 		} else { ctx.fillStyle = "black"; }
 
 		if (this.primitiveDistance(minimap.x+xDist/5, minimap.y+yDist/5, minimap.x, minimap.y) <= minimap.r*2.1) {
-			ctx.fillRect(minimap.x+xDist/10, minimap.y+yDist/10, 3.2, 3.2);
+			ctx.fillRect(minimap.x+xDist/minimap.scale, minimap.y+yDist/minimap.scale, Game.scale/minimap.scale, Game.scale/minimap.scale);
 		}
 	}
 
 	collision( obj ) {
 		var collided = false;
 
-		if (this.x < obj.x + obj.image.width &&
-			this.x + this.image.width > obj.x &&
-			this.y < obj.y + obj.image.height &&
-			this.image.height + this.y > obj.y) {
-			collided = true;
+		if (this!=obj) {
+			if (this.x < obj.x + obj.image.width &&
+				this.x + this.image.width > obj.x &&
+				this.y < obj.y + obj.image.height &&
+				this.image.height + this.y > obj.y) {
+				collided = true;
+			}
 		}
 
 		return collided;
 	}
 
 	distance( obj ) {
-		var dx 	= Math.abs(this.x - obj.x)
-		var dy 	= Math.abs(this.y - obj.y);
+		var dx 	= Math.abs((this.x+this.image.width/2) - (obj.x+obj.image.width/2))
+		var dy 	= Math.abs((this.y+this.image.height/2) - (obj.y+obj.image.height/2));
 		var hyp	= Math.sqrt( (dx*dx)+(dy*dy) );
 
 		return hyp;
@@ -56,6 +58,26 @@ class Sprite {
 		var hyp	= Math.sqrt( (dx*dx)+(dy*dy) );
 
 		return hyp;
+	}
+
+	popup(text) {
+		if (document.getElementsByClassName('popup')[0]===undefined) {
+			var div = document.createElement('div');
+			div.className = 'popup';
+			div.style.left = Game.canvas.width/10 + "px";
+			div.style.top = Game.canvas.height/10 + "px";
+			div.style.width = (Game.canvas.width - Game.canvas.width/5)+"px";
+			div.style.height = (Game.canvas.height - Game.canvas.height/5)+"px";
+
+			var textbox = document.createElement('div');
+			textbox.className = 'popup';
+			div.appendChild(textbox);
+
+			var text = document.createTextNode(text);
+			textbox.appendChild(text);
+
+			document.body.appendChild(div);
+		}
 	}
 
 }
@@ -71,6 +93,11 @@ class Player extends Sprite {
 	}
 
 	move(ctx) {
+		if ( 87 in this.keysDown || 65 in this.keysDown || 83 in this.keysDown || 68 in this.keysDown) {
+			if (document.getElementsByClassName('popup')[0]!==undefined) {
+				document.body.removeChild(document.getElementsByClassName('popup')[0]);
+			}
+		}
 		/*--W--*/
 		if ( 87 in this.keysDown ) {
 			for (var i in entities) { entities[i].y+=this.speed }
@@ -128,13 +155,19 @@ class Goblin extends Sprite {
 		super(img,x,y);
 		this.speed = 1.5;
 		this.viewDist = 10;
+		this.dialogue = "Eek don't touch me!";
+	}
+
+	move(ctx) {
+		if (this.distance(entities.player)<=Game.scale*2 && 69 in entities.player.keysDown) {
+			this.popup(this.dialogue);
+		}
 	}
 }
 
 class Wall extends Sprite {
 	constructor(img,x,y) {
 		super(img,x,y);
-		this.solid = true;
 	}
 }
 
