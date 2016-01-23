@@ -60,46 +60,6 @@ class Sprite {
 		return hyp;
 	}
 
-
-	// tree = {};
-	// tree.npcText = [
-	// 	["Hello, what's your name?",[0, 1, 2]],
-	// 	["Nice to meet you",[1, 2]],
-	// 	["I'm Space Goblin",[]],
-	// ];
-	// tree.playerText = [
-	// 	["I'm bob",[1]],
-	// 	["Who are you",[2]],
-	// 	["Goodbye",[]],
-	// ];
-
-	popup(text, options) {
-		if (document.getElementsByClassName('popup')[0]===undefined) {
-			var div = document.createElement('div');
-			div.className = 'popup';
-			div.style.left = Game.canvas.width/10 + "px";
-			div.style.top = Game.canvas.height/10 + "px";
-			div.style.width = (Game.canvas.width - Game.canvas.width/5)+"px";
-			div.style.height = (Game.canvas.height - Game.canvas.height/5)+"px";
-
-			var textbox = document.createElement('div');
-			textbox.className = 'popup';
-			div.appendChild(textbox);
-
-			var text = document.createTextNode(text);
-			textbox.appendChild(text);
-
-			for (var i = 0; i < options.length; i++) {
-				var dialogueOption = document.createElement('p');
-				dialogueOption.innerHTML = (options[i] -1);
-				dialogueOption.setAttribute('className', 'dialogueOption');
-				div.appendChild(dialogueOption);
-			}
-
-			document.body.appendChild(div);
-		}
-	}
-
 }
 
 class Player extends Sprite {
@@ -169,13 +129,50 @@ class Player extends Sprite {
 
 }
 
+
 class NPC extends Sprite {
 	constructor(img,x,y) {
 		super(img,x,y);
 		this.speed = 0.8;
 		this.tree;
+		this.curretQuery = 0;
 		this.direction = 0;
 		this.currentSteps = 0;
+	}
+
+	popup(text, options) {
+		if (document.getElementsByClassName('popup')[0]===undefined) {
+			var div = document.createElement('div');
+			div.className = 'popup';
+			div.style.left = Game.canvas.width/10 + "px";
+			div.style.top = Game.canvas.height/10 + "px";
+			div.style.width = (Game.canvas.width - Game.canvas.width/5)+"px";
+			div.style.height = (Game.canvas.height - Game.canvas.height/5)+"px";
+
+			var textbox = document.createElement('div');
+			textbox.className = 'popup';
+			div.appendChild(textbox);
+
+			var text = document.createTextNode(text);
+			textbox.appendChild(text);
+
+			for (var i = 0; i < options.length; i++) {
+				var dialogueOption = document.createElement('p');
+				dialogueOption.innerHTML = (options[i][0]);
+				div.appendChild(dialogueOption);
+			}
+
+			document.body.appendChild(div);
+		}
+	}
+
+	setQuery(i) {
+		alert();
+	}
+
+	incrementQuery(num) {
+		document.body.removeChild(document.getElementsByClassName('popup')[0]);
+		this.curretQuery = num;
 	}
 
 	move(ctx) {
@@ -225,12 +222,12 @@ class NPC extends Sprite {
 
 		// Dialogue tree
 		if (this.tree != undefined) {
-			if (this.distance(entities.player)<=Game.scale*2 && 69 /*E*/ in entities.player.keysDown) {
+			if (this.distance(entities.player)<=Game.scale*2 && 69 in entities.player.keysDown) {
 				var options = [];
-				for (var i = 0; i < this.tree.npcText[0][1].length; i++) {
-					options.push(this.tree.npcText[0][1][i]);
+				for (var i = 0; i < this.tree.npcText[this.curretQuery][1].length; i++) {
+					options.push(this.tree.playerText[this.tree.npcText[this.curretQuery][1][i]-1]);
 				}
-				this.popup(this.dialogue, options);
+				this.popup(this.tree.npcText[this.curretQuery][0], options);
 			}
 		}
 	}

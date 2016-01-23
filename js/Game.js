@@ -96,7 +96,7 @@ var Game = {
 							entities['entity'+i] = new Goblin("images/sprites/space_goblin.png", (obj.board[i].x*Game.scale), (obj.board[i].y*Game.scale));
 							entities['entity'+i].color = "red";
 							if (obj.board[i].tree != undefined) {
-								entities['entity'+i].tree = obj.board.tree;
+								entities['entity'+i].tree = obj.board[i].tree;
 							}
 							break;
 						case 3:
