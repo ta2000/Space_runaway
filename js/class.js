@@ -60,7 +60,20 @@ class Sprite {
 		return hyp;
 	}
 
-	popup(text) {
+
+	// tree = {};
+	// tree.npcText = [
+	// 	["Hello, what's your name?",[0, 1, 2]],
+	// 	["Nice to meet you",[1, 2]],
+	// 	["I'm Space Goblin",[]],
+	// ];
+	// tree.playerText = [
+	// 	["I'm bob",[1]],
+	// 	["Who are you",[2]],
+	// 	["Goodbye",[]],
+	// ];
+
+	popup(text, options) {
 		if (document.getElementsByClassName('popup')[0]===undefined) {
 			var div = document.createElement('div');
 			div.className = 'popup';
@@ -76,6 +89,13 @@ class Sprite {
 			var text = document.createTextNode(text);
 			textbox.appendChild(text);
 
+			for (var i = 0; i < options.length; i++) {
+				var dialogueOption = document.createElement('p');
+				dialogueOption.innerHTML = (options[i] -1);
+				dialogueOption.setAttribute('className', 'dialogueOption');
+				div.appendChild(dialogueOption);
+			}
+
 			document.body.appendChild(div);
 		}
 	}
@@ -88,7 +108,6 @@ class Player extends Sprite {
 		this.speed = 3;
 		this.keysDown = {};
 		this.direction = 90;
-		this.viewDist = 160;
 		this.visibleObjs = [];
 	}
 
@@ -150,18 +169,76 @@ class Player extends Sprite {
 
 }
 
-class Goblin extends Sprite {
+class NPC extends Sprite {
 	constructor(img,x,y) {
 		super(img,x,y);
-		this.speed = 1.5;
-		this.viewDist = 10;
-		this.dialogue = "Eek don't touch me!";
+		this.speed = 0.8;
+		this.tree;
+		this.direction = 0;
+		this.currentSteps = 0;
 	}
 
 	move(ctx) {
-		if (this.distance(entities.player)<=Game.scale*2 && 69 in entities.player.keysDown) {
-			this.popup(this.dialogue);
+		this.currentSteps--;
+		if (this.currentSteps <= 0) {
+			this.direction = (Math.floor(Math.random()*10));
+			this.currentSteps = (Math.floor(Math.random()*100));
 		}
+
+		var free = true;
+		for (var i in entities) {
+			if (entities[i]!=this) {
+				if ( this.distance(entities[i])<=36 ) {
+					if (this.collision(entities[i])) {
+						this.currentSteps = 0;
+						this.speed = -this.speed;
+					}
+					free = false;
+				}
+			}
+		}
+		if (free) {
+			this.speed = Math.abs(this.speed);
+		}
+
+		if (this.direction==0) {
+			this.x+=this.speed;
+		} else if (this.direction==1) {
+			this.x-=this.speed;
+		} else if (this.direction==2) {
+			this.y+=this.speed;
+		} else if (this.direction==3) {
+			this.y-=this.speed;
+		}
+
+		// tree = {};
+		// tree.npcText = [
+		// 	["Hello, what's your name?",[0, 1, 2]],
+		// 	["Nice to meet you",[1, 2]],
+		// 	["I'm Space Goblin",[]],
+		// ];
+		// tree.playerText = [
+		// 	["I'm bob",[1]],
+		// 	["Who are you",[2]],
+		// 	["Goodbye",[]],
+		// ];
+
+		// Dialogue tree
+		if (this.tree != undefined) {
+			if (this.distance(entities.player)<=Game.scale*2 && 69 /*E*/ in entities.player.keysDown) {
+				var options = [];
+				for (var i = 0; i < this.tree.npcText[0][1].length; i++) {
+					options.push(this.tree.npcText[0][1][i]);
+				}
+				this.popup(this.dialogue, options);
+			}
+		}
+	}
+}
+
+class Goblin extends NPC {
+	constructor(img,x,y) {
+		super(img,x,y);
 	}
 }
 

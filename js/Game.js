@@ -95,6 +95,9 @@ var Game = {
 						case 2:
 							entities['entity'+i] = new Goblin("images/sprites/space_goblin.png", (obj.board[i].x*Game.scale), (obj.board[i].y*Game.scale));
 							entities['entity'+i].color = "red";
+							if (obj.board[i].tree != undefined) {
+								entities['entity'+i].tree = obj.board.tree;
+							}
 							break;
 						case 3:
 							entities['entity'+i] = new Wall("images/sprites/wall.png", (obj.board[i].x*Game.scale), (obj.board[i].y*Game.scale));
