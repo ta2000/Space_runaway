@@ -29,10 +29,3 @@ canvas {
 	border: 6px solid #FFFFFF;
 	color: white;
 }
-
-.dialogueOption {
-	color: white;
-}
-.dialogueOption:hover {
-	color: gray;
-}

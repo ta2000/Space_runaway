@@ -125,5 +125,6 @@ var Game = {
 			entities[i].x+=xDif;
 			entities[i].y+=yDif;
 		}
-	}
+	},
+	popup : false
 }

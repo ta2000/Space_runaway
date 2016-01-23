@@ -129,7 +129,6 @@ class Player extends Sprite {
 
 }
 
-
 class NPC extends Sprite {
 	constructor(img,x,y) {
 		super(img,x,y);
@@ -142,6 +141,8 @@ class NPC extends Sprite {
 
 	popup(text, options) {
 		if (document.getElementsByClassName('popup')[0]===undefined) {
+			var obj = this;
+
 			var div = document.createElement('div');
 			div.className = 'popup';
 			div.style.left = Game.canvas.width/10 + "px";
@@ -151,29 +152,34 @@ class NPC extends Sprite {
 
 			var textbox = document.createElement('div');
 			textbox.className = 'popup';
-			div.appendChild(textbox);
-
 			var text = document.createTextNode(text);
 			textbox.appendChild(text);
 
-			for (var i = 0; i < options.length; i++) {
+			for (let i = 0; i < options.length; i++) {
 				var dialogueOption = document.createElement('p');
+				// Set styling
+				dialogueOption.style.cursor = "pointer";
+				dialogueOption.onmouseenter = function() {
+					this.style.color = "#FF0000";
+				}
+				dialogueOption.onmouseout = function() {
+					this.style.color = "#FFFFFF";
+				}
 				dialogueOption.innerHTML = (options[i][0]);
+				// Check which option was chosen
+				dialogueOption.addEventListener('click', function newQuery() {
+					obj.curretQuery = options[i][1][0]-1;
+					document.body.removeChild(document.getElementsByClassName('popup')[0]);
+					obj.dialogue();
+				}, false);
 				div.appendChild(dialogueOption);
 			}
 
+			div.appendChild(textbox);
 			document.body.appendChild(div);
 		}
 	}
 
-	setQuery(i) {
-		alert();
-	}
-
-	incrementQuery(num) {
-		document.body.removeChild(document.getElementsByClassName('popup')[0]);
-		this.curretQuery = num;
-	}
 
 	move(ctx) {
 		this.currentSteps--;
@@ -208,29 +214,22 @@ class NPC extends Sprite {
 			this.y-=this.speed;
 		}
 
-		// tree = {};
-		// tree.npcText = [
-		// 	["Hello, what's your name?",[0, 1, 2]],
-		// 	["Nice to meet you",[1, 2]],
-		// 	["I'm Space Goblin",[]],
-		// ];
-		// tree.playerText = [
-		// 	["I'm bob",[1]],
-		// 	["Who are you",[2]],
-		// 	["Goodbye",[]],
-		// ];
-
 		// Dialogue tree
 		if (this.tree != undefined) {
 			if (this.distance(entities.player)<=Game.scale*2 && 69 in entities.player.keysDown) {
-				var options = [];
-				for (var i = 0; i < this.tree.npcText[this.curretQuery][1].length; i++) {
-					options.push(this.tree.playerText[this.tree.npcText[this.curretQuery][1][i]-1]);
-				}
-				this.popup(this.tree.npcText[this.curretQuery][0], options);
+				this.dialogue();
 			}
 		}
 	}
+
+	dialogue() {
+		var options = [];
+		for (var i = 0; i < this.tree.npcText[this.curretQuery][1].length; i++) {
+			options.push(this.tree.playerText[this.tree.npcText[this.curretQuery][1][i]-1]);
+		}
+		this.popup(this.tree.npcText[this.curretQuery][0], options);
+	}
+
 }
 
 class Goblin extends NPC {
