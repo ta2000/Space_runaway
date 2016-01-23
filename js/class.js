@@ -135,7 +135,7 @@ class NPC extends Sprite {
 		this.speed = 0.8;
 		this.tree;
 		this.curretQuery = 0;
-		this.direction = 0;
+		this.direction;
 		this.currentSteps = 0;
 	}
 
@@ -182,37 +182,29 @@ class NPC extends Sprite {
 
 
 	move(ctx) {
-		this.currentSteps--;
-		if (this.currentSteps <= 0) {
-			this.direction = (Math.floor(Math.random()*10));
-			this.currentSteps = (Math.floor(Math.random()*100));
-		}
+		// ======================
+		//  NPC AI CODE GOES HERE
+		// ======================
 
-		var free = true;
-		for (var i in entities) {
-			if (entities[i]!=this) {
-				if ( this.distance(entities[i])<=36 ) {
-					if (this.collision(entities[i])) {
-						this.currentSteps = 0;
-						this.speed = -this.speed;
-					}
-					free = false;
-				}
-			}
-		}
-		if (free) {
-			this.speed = Math.abs(this.speed);
-		}
 
-		if (this.direction==0) {
-			this.x+=this.speed;
-		} else if (this.direction==1) {
-			this.x-=this.speed;
-		} else if (this.direction==2) {
-			this.y+=this.speed;
-		} else if (this.direction==3) {
-			this.y-=this.speed;
-		}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+		// ======================
+		//  NPC AI CODE ENDS HERE
+		// ======================
 
 		// Dialogue tree
 		if (this.tree != undefined) {
