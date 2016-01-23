@@ -60,26 +60,6 @@ class Sprite {
 		return hyp;
 	}
 
-	popup(text) {
-		if (document.getElementsByClassName('popup')[0]===undefined) {
-			var div = document.createElement('div');
-			div.className = 'popup';
-			div.style.left = Game.canvas.width/10 + "px";
-			div.style.top = Game.canvas.height/10 + "px";
-			div.style.width = (Game.canvas.width - Game.canvas.width/5)+"px";
-			div.style.height = (Game.canvas.height - Game.canvas.height/5)+"px";
-
-			var textbox = document.createElement('div');
-			textbox.className = 'popup';
-			div.appendChild(textbox);
-
-			var text = document.createTextNode(text);
-			textbox.appendChild(text);
-
-			document.body.appendChild(div);
-		}
-	}
-
 }
 
 class Player extends Sprite {
@@ -88,7 +68,6 @@ class Player extends Sprite {
 		this.speed = 3;
 		this.keysDown = {};
 		this.direction = 90;
-		this.viewDist = 160;
 		this.visibleObjs = [];
 	}
 
@@ -150,18 +129,112 @@ class Player extends Sprite {
 
 }
 
-class Goblin extends Sprite {
+class NPC extends Sprite {
 	constructor(img,x,y) {
 		super(img,x,y);
-		this.speed = 1.5;
-		this.viewDist = 10;
-		this.dialogue = "Eek don't touch me!";
+		this.speed = 0.8;
+		this.tree;
+		this.curretQuery = 0;
+		this.direction = 0;
+		this.currentSteps = 0;
 	}
 
-	move(ctx) {
-		if (this.distance(entities.player)<=Game.scale*2 && 69 in entities.player.keysDown) {
-			this.popup(this.dialogue);
+	popup(text, options) {
+		if (document.getElementsByClassName('popup')[0]===undefined) {
+			var obj = this;
+
+			var div = document.createElement('div');
+			div.className = 'popup';
+			div.style.left = Game.canvas.width/10 + "px";
+			div.style.top = Game.canvas.height/10 + "px";
+			div.style.width = (Game.canvas.width - Game.canvas.width/5)+"px";
+			div.style.height = (Game.canvas.height - Game.canvas.height/5)+"px";
+
+			var textbox = document.createElement('div');
+			textbox.className = 'popup';
+			var text = document.createTextNode(text);
+			textbox.appendChild(text);
+
+			for (let i = 0; i < options.length; i++) {
+				var dialogueOption = document.createElement('p');
+				// Set styling
+				dialogueOption.style.cursor = "pointer";
+				dialogueOption.onmouseenter = function() {
+					this.style.color = "#FF0000";
+				}
+				dialogueOption.onmouseout = function() {
+					this.style.color = "#FFFFFF";
+				}
+				dialogueOption.innerHTML = (options[i][0]);
+				// Check which option was chosen
+				dialogueOption.addEventListener('click', function newQuery() {
+					obj.curretQuery = options[i][1][0]-1;
+					document.body.removeChild(document.getElementsByClassName('popup')[0]);
+					obj.dialogue();
+				}, false);
+				div.appendChild(dialogueOption);
+			}
+
+			div.appendChild(textbox);
+			document.body.appendChild(div);
 		}
+	}
+
+
+	move(ctx) {
+		this.currentSteps--;
+		if (this.currentSteps <= 0) {
+			this.direction = (Math.floor(Math.random()*10));
+			this.currentSteps = (Math.floor(Math.random()*100));
+		}
+
+		var free = true;
+		for (var i in entities) {
+			if (entities[i]!=this) {
+				if ( this.distance(entities[i])<=36 ) {
+					if (this.collision(entities[i])) {
+						this.currentSteps = 0;
+						this.speed = -this.speed;
+					}
+					free = false;
+				}
+			}
+		}
+		if (free) {
+			this.speed = Math.abs(this.speed);
+		}
+
+		if (this.direction==0) {
+			this.x+=this.speed;
+		} else if (this.direction==1) {
+			this.x-=this.speed;
+		} else if (this.direction==2) {
+			this.y+=this.speed;
+		} else if (this.direction==3) {
+			this.y-=this.speed;
+		}
+
+		// Dialogue tree
+		if (this.tree != undefined) {
+			if (this.distance(entities.player)<=Game.scale*2 && 69 in entities.player.keysDown) {
+				this.dialogue();
+			}
+		}
+	}
+
+	dialogue() {
+		var options = [];
+		for (var i = 0; i < this.tree.npcText[this.curretQuery][1].length; i++) {
+			options.push(this.tree.playerText[this.tree.npcText[this.curretQuery][1][i]-1]);
+		}
+		this.popup(this.tree.npcText[this.curretQuery][0], options);
+	}
+
+}
+
+class Goblin extends NPC {
+	constructor(img,x,y) {
+		super(img,x,y);
 	}
 }
 
