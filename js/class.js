@@ -152,8 +152,19 @@ class NPC extends Sprite {
 
 			var textbox = document.createElement('div');
 			textbox.className = 'popup';
-			var text = document.createTextNode(text);
-			textbox.appendChild(text);
+			var query = document.createTextNode("");
+
+			// Scrolling text
+			var i=0;
+			var textscroll = setInterval(function () {
+				query.nodeValue += text.charAt(i);
+				i++;
+				if (i==text.length) {
+					clearInterval(textscroll);
+				}
+			}, 45); // Text scroll speed
+
+			textbox.appendChild(query);
 
 			for (let i = 0; i < options.length; i++) {
 				var dialogueOption = document.createElement('p');
@@ -166,13 +177,15 @@ class NPC extends Sprite {
 					this.style.color = "#FFFFFF";
 				}
 				dialogueOption.innerHTML = (options[i][0]);
+				div.appendChild(dialogueOption);
+
 				// Check which option was chosen
 				dialogueOption.addEventListener('click', function newQuery() {
 					obj.curretQuery = options[i][1][0]-1;
 					document.body.removeChild(document.getElementsByClassName('popup')[0]);
 					obj.dialogue();
 				}, false);
-				div.appendChild(dialogueOption);
+				// NOTE: Referencing dialogueOption below causes it and event listener to be retained in memory
 			}
 
 			div.appendChild(textbox);
