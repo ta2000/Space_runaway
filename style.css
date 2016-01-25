@@ -17,15 +17,34 @@ canvas {
 .popup {
 	position: absolute;
 	z-index: 1;
-	margin: auto;
-	display: block;
 	text-align: left;
-	width: 90%;
-	bottom: 10%;
-	top: auto;
 	padding: 20px;
 	font-family: sans-serif;
 	background-color: #000000;
 	border: 6px solid #FFFFFF;
 	color: white;
+	overflow: visible;
+}
+
+.textContainer {
+	width: 100%;
+	height: 100%;
+}
+
+.querybox {
+	height: 30%;
+	width: 30%;
+	border: 3px solid #FFFFFF;
+}
+
+.dialogueOption {
+	cursor: pointer;
+	clear: both;
+	float: left;
+	padding-left: 10px;
+	padding-top: 5px;
+	padding-bottom: 5px
+}
+.dialogueOption:hover {
+	color: #00FF00;
 }

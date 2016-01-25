@@ -150,34 +150,36 @@ class NPC extends Sprite {
 			div.style.width = (Game.canvas.width - Game.canvas.width/5)+"px";
 			div.style.height = (Game.canvas.height - Game.canvas.height/5)+"px";
 
-			var textbox = document.createElement('div');
-			textbox.className = 'popup';
-			var query = document.createTextNode("");
+			// Container for query and responses
+			var textContainer = document.createElement('div');
+			textContainer.className = "textContainer";
+			div.appendChild(textContainer);
+
+			// NPC query
+			var querybox = document.createElement('div');
+			querybox.className = "querybox";
+			var querytext = document.createTextNode("");
+			querybox.appendChild(querytext);
+
+			textContainer.appendChild(querybox);
 
 			// Scrolling text
 			var i=0;
 			var textscroll = setInterval(function () {
-				query.nodeValue += text.charAt(i);
+				querytext.nodeValue += text.charAt(i);
 				i++;
 				if (i==text.length) {
 					clearInterval(textscroll);
 				}
-			}, 45); // Text scroll speed
+			}, 40); // Text scroll speed
 
-			textbox.appendChild(query);
-
+			// Player response options
 			for (let i = 0; i < options.length; i++) {
 				var dialogueOption = document.createElement('p');
 				// Set styling
-				dialogueOption.style.cursor = "pointer";
-				dialogueOption.onmouseenter = function() {
-					this.style.color = "#FF0000";
-				}
-				dialogueOption.onmouseout = function() {
-					this.style.color = "#FFFFFF";
-				}
+				dialogueOption.className = "dialogueOption";
 				dialogueOption.innerHTML = (options[i][0]);
-				div.appendChild(dialogueOption);
+				textContainer.appendChild(dialogueOption);
 
 				// Check which option was chosen
 				dialogueOption.addEventListener('click', function newQuery() {
@@ -188,7 +190,6 @@ class NPC extends Sprite {
 				// NOTE: Referencing dialogueOption below causes it and event listener to be retained in memory
 			}
 
-			div.appendChild(textbox);
 			document.body.appendChild(div);
 		}
 	}
