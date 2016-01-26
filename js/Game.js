@@ -1,3 +1,4 @@
+var entities = {};
 var Game = {
 	levelNum : 1,
 	scale : 32,
@@ -102,10 +103,6 @@ var Game = {
 						case 3:
 							entities['entity'+i] = new Wall("images/sprites/wall.png", (obj.board[i].x*Game.scale), (obj.board[i].y*Game.scale));
 							entities['entity'+i].color = "blue";
-							break;
-						case 4:
-							entities['entity'+i] = new Portal("images/sprites/portal.png", (obj.board[i].x*Game.scale), (obj.board[i].y*Game.scale));
-							entities['entity'+i].color = "purple";
 							break;
 						default:
 							console.log("Error loading tile: invalid type");
