@@ -79,6 +79,9 @@ var Game = {
 	},
 	// Level loading and parsing
 	loadLevel : function(levelNum) {
+		// Get the images from folder
+		var images = ["images/sprites/player.png", "images/sprites/space_goblin.png", "images/sprites/wall.png"];
+
 		// Gets level from server, can't get locally
 		var url = "http://ta2000.github.io/Game/levels/level" + levelNum + ".json";
 		var xhttp = new XMLHttpRequest();
@@ -88,24 +91,21 @@ var Game = {
 				var obj = {};
 				obj = JSON.parse(json);
 				for (var i = 0; i < obj.board.length; i++) {
-					switch (obj.board[i].type) {
-						case 1:
-							entities['player'] = new Player("images/sprites/player.png", (obj.board[i].x*Game.scale), (obj.board[i].y*Game.scale));
-							entities['player'].color = "green";
-							break;
-						case 2:
-							entities['entity'+i] = new Goblin("images/sprites/space_goblin.png", (obj.board[i].x*Game.scale), (obj.board[i].y*Game.scale));
+					try { // If className is valid create normally
+						if ( obj.board[i].imgIndex == 1 ) { // If imgIndex is player imgIndex, set to player
+							entities.player = new Game[obj.board[i].className]( images[obj.board[i].imgIndex -1], (obj.board[i].x*Game.scale), (obj.board[i].y*Game.scale) );
+						} else { // Otherwise create the object as normal entity with it's className
+							entities['entity'+i] = new Game[obj.board[i].className]( images[obj.board[i].imgIndex -1], (obj.board[i].x*Game.scale), (obj.board[i].y*Game.scale) );
+							entities['entity'+i].color = "lime";
+						}
+					} catch (err) { // If className is invalid create as Sprite
+						if ( images[obj.board[i].imgIndex -1] != undefined ) {
+							entities['entity'+i] = new Sprite(  images[obj.board[i].imgIndex -1],(obj.board[i].x*Game.scale), (obj.board[i].y*Game.scale) );
 							entities['entity'+i].color = "red";
-							if (obj.board[i].tree != undefined) {
-								entities['entity'+i].tree = obj.board[i].tree;
-							}
-							break;
-						case 3:
-							entities['entity'+i] = new Wall("images/sprites/wall.png", (obj.board[i].x*Game.scale), (obj.board[i].y*Game.scale));
-							entities['entity'+i].color = "blue";
-							break;
-						default:
-							console.log("Error loading tile: invalid type");
+							console.log("Error loading tile, no valid class. Created as a Sprite.");
+						} else { // Don't create anything if className and image are invalid
+							console.log("Error loading tile, no valid class or image.");
+						}
 					}
 				}
 				// Set the view on the player
@@ -122,6 +122,5 @@ var Game = {
 			entities[i].x+=xDif;
 			entities[i].y+=yDif;
 		}
-	},
-	popup : false
+	}
 }

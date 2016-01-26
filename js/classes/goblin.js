@@ -5,3 +5,4 @@ class Goblin extends NPC {
 		super(img,x,y);
 	}
 }
+Game.Goblin = Goblin;

@@ -59,3 +59,4 @@ class Sprite {
 	}
 
 }
+Game.Sprite = Sprite;

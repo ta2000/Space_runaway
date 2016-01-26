@@ -5,3 +5,4 @@ class Wall extends Sprite {
 		super(img,x,y);
 	}
 }
+Game.Wall = Wall;

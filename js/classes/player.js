@@ -66,3 +66,4 @@ class Player extends Sprite {
 	}
 
 }
+Game.Player = Player;

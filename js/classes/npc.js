@@ -108,3 +108,4 @@ class NPC extends Sprite {
 	}
 
 }
+Game.NPC = NPC;
