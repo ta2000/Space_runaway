@@ -97,6 +97,10 @@ var Game = {
 						} else { // Otherwise create the object as normal entity with it's className
 							entities['entity'+i] = new Game[obj.board[i].className]( images[obj.board[i].imgIndex -1], (obj.board[i].x*Game.scale), (obj.board[i].y*Game.scale) );
 							entities['entity'+i].color = "lime";
+							// Add tree is exists
+							if (obj.board[i].tree != undefined) {
+								entities['entity'+i].tree = obj.board[i].tree;
+							}
 						}
 					} catch (err) { // If className is invalid create as Sprite
 						if ( images[obj.board[i].imgIndex -1] != undefined ) {
