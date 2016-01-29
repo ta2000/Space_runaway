@@ -14,6 +14,12 @@ canvas {
     display: block;
 }
 
+#minimap {
+    border-radius: 50%;
+    width: 10vh;
+    height: 10vh;
+}
+
 .popup {
 	position: absolute;
 	z-index: 1;

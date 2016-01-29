@@ -9,7 +9,7 @@ class Sprite {
 		this.solid = true;
 	}
 
-	draw( ctx ) {
+	draw( ctx ) { //Allows sprites to self-draw
 		ctx.drawImage(this.image, this.x, this.y);
 	}
 
@@ -22,8 +22,10 @@ class Sprite {
 			ctx.fillStyle = this.color;
 		} else { ctx.fillStyle = "black"; }
 
-		if (this.primitiveDistance(minimap.x+xDist/5, minimap.y+yDist/5, minimap.x, minimap.y) <= minimap.r*2.1) {
-			ctx.fillRect(minimap.x+xDist/minimap.scale, minimap.y+yDist/minimap.scale, Game.scale/minimap.scale, Game.scale/minimap.scale);
+		if (this.primitiveDistance(minimap.x+xDist/minimap.scale, minimap.y+yDist/minimap.scale, minimap.x, minimap.y) <= minimap.r) {
+			//if (this.primitiveDistance(minimap.x+xDist/5, minimap.y+yDist/5, minimap.x, minimap.y) <= minimap.r){
+                ctx.fillRect(minimap.x+xDist/minimap.scale, minimap.y+yDist/minimap.scale, Game.scale/minimap.scale, Game.scale/minimap.scale);
+            //}
 		}
 	}
 

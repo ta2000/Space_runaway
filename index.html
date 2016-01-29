@@ -1,30 +1,33 @@
 <!DOCTYPE html>
 <html>
-<head>
-	<title>Space Runaway</title>
+    <head>
+        <title>Space Runaway</title>
+        
+	   <!-- JAVASCRIPT LINKS -->
+        <script type="text/javascript" src="js/Game.js"></script>
+	   
+        <!-- CLASSES -->
+	   <script type="text/javascript" src="js/classes/sprite.js"></script>
+        <script type="text/javascript" src="js/classes/player.js"></script>
+	   <script type="text/javascript" src="js/classes/wall.js"></script>
+        <script type="text/javascript" src="js/classes/npc.js"></script>
+	   <script type="text/javascript" src="js/classes/goblin.js"></script>
+        
+	   <!-- CSS LINK -->
+        <link rel="stylesheet" type="text/css" href="style.css">
+    </head>
 
-	<!-- JAVASCRIPT LINKS -->
-	<script type="text/javascript" src="js/Game.js"></script>
-	<script type="text/javascript" src="js/minimap.js"></script>
-	<!-- CLASSES -->
-	<script type="text/javascript" src="js/classes/sprite.js"></script>
-	<script type="text/javascript" src="js/classes/player.js"></script>
-	<script type="text/javascript" src="js/classes/wall.js"></script>
-	<script type="text/javascript" src="js/classes/npc.js"></script>
-	<script type="text/javascript" src="js/classes/goblin.js"></script>
+    <body onload="startGame()">
+        <div id="minimap">
+            <script type="text/javascript" src="js/minimap.js"></script>
+        </div>
+        <script>
+	       function startGame() {
+               Game.start();
+	       }
+        </script>
+        
 
-	<!-- CSS LINK -->
-	<link rel="stylesheet" type="text/css" href="style.css">
-</head>
-
-<body onload="startGame()">
-
-<script>
-	function startGame() {
-		Game.start();
-	}
-</script>
-
-</body>
+    </body>
 
 </html>
