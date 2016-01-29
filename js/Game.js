@@ -1,9 +1,12 @@
 var entities = {};
 var Game = {
+	levelURL : false,
 	levelNum : 1,
 	scale : 32,
+	params : {},
 	canvas : document.createElement("canvas"),
 	start : function() {
+		this.update_from_params();
 		this.canvas.width = window.innerWidth;
 		this.canvas.height = window.innerHeight;
 		this.ctx = this.canvas.getContext("2d");
@@ -23,8 +26,8 @@ var Game = {
 				Game.deviceOrientationHandler(tiltLR, tiltFB, dir);
 				}, false);
 		}
-		// Level
-		this.loadLevel(Game.levelNum);
+		// Load the levelURL if its not false, otherwise we load levelNum
+		this.loadLevel(Game.levelURL || Game.levelNum);
 		// Draw
 		Game.draw();
 	},
@@ -77,13 +80,50 @@ var Game = {
 			}
 		}
 	},
+	update_from_params : function () {
+		// Grab the params from after the pound in the URL
+		this.params = this.page_params();
+		// Any paramaters that are present in params that are also be present
+		// in Game will be updated so that the Game key will be the same as the
+		// value for the same key in params.
+		// Example: this.levelNum will equal this.params["levelNum"] if levelNum
+		// is present in this.params
+		for (var key in this.params) {
+			if (this.params.hasOwnProperty(key) && this.hasOwnProperty(key)) {
+				this[key] = this.params[key];
+			}
+		}
+	},
+	page_params : function () {
+		// Get parameters after pound in URL
+		// Example: http://ta2000.github.io/Game/#name=someuser&levelNum=6
+		var pairs = location.hash.substr(1).split('&').map(function (pair) {
+			var kv = pair.split('=', 2);
+			return [decodeURIComponent(kv[0]), kv.length === 2 ? decodeURIComponent(kv[1]) : null];
+		});
+		var asObject = {};
+		for (var i = 0; i < pairs.length; i++) {
+			asObject[pairs[i][0]] = pairs[i][1]
+		}
+		// This gets added for some reason
+		delete asObject[""];
+		return asObject;
+	},
 	// Level loading and parsing
-	loadLevel : function(levelNum) {
+	loadLevel : function(level) {
+		var url;
+		// Check if we are loading an offical level or user created
+		// If the level is a number then it is an offical level
+		if (isNaN(level)) {
+			// The level is a url given by the user because it is not a number
+			url = level;
+		} else {
+			// Gets level from server by number
+			url = "http://ta2000.github.io/Game/levels/level" + level + ".json";
+		}
 		// Get the images from folder
 		var images = ["images/sprites/player.png", "images/sprites/space_goblin.png", "images/sprites/wall.png"];
 
-		// Gets level from server, can't get locally
-		var url = "http://ta2000.github.io/Game/levels/level" + levelNum + ".json";
 		var xhttp = new XMLHttpRequest();
 		xhttp.onreadystatechange = function() {
 			if (xhttp.readyState == 4) {
