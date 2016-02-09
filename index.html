@@ -1,33 +1,38 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>Space Runaway</title>
-        
-	   <!-- JAVASCRIPT LINKS -->
-        <script type="text/javascript" src="js/Game.js"></script>
-	   
-        <!-- CLASSES -->
-	   <script type="text/javascript" src="js/classes/sprite.js"></script>
-        <script type="text/javascript" src="js/classes/player.js"></script>
-	   <script type="text/javascript" src="js/classes/wall.js"></script>
-        <script type="text/javascript" src="js/classes/npc.js"></script>
-	   <script type="text/javascript" src="js/classes/goblin.js"></script>
-        
-	   <!-- CSS LINK -->
-        <link rel="stylesheet" type="text/css" href="style.css">
-    </head>
+<head>
+	<title>Space Runaway</title>
+    
+    <!-- JQUERY IMPORT -->
+    <script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
 
-    <body onload="startGame()">
-        <div id="minimap">
-            <script type="text/javascript" src="js/minimap.js"></script>
-        </div>
-        <script>
-	       function startGame() {
-               Game.start();
-	       }
-        </script>
-        
+	<!-- JAVASCRIPT LINKS -->
+	<script type="text/javascript" src="js/Game.js"></script>
+	<script type="text/javascript" src="js/minimap.js"></script>
+	<!-- CLASSES -->
+	<script type="text/javascript" src="js/classes/sprite.js"></script>
+	<script type="text/javascript" src="js/classes/player.js"></script>
+	<script type="text/javascript" src="js/classes/wall.js"></script>
+	<script type="text/javascript" src="js/classes/npc.js"></script>
+	<script type="text/javascript" src="js/classes/goblin.js"></script>
 
-    </body>
+	<!-- CSS LINK -->
+	<link rel="stylesheet" type="text/css" href="style.css">
+    <link href='https://fonts.googleapis.com/css?family=Rock+Salt|Ubuntu:400,400italic|Finger+Paint' rel='stylesheet' type='text/css'>
+</head>
+
+<body onload="startGame()">
+
+<canvas id="gameCanvas">
+    
+</canvas>
+
+<script type="text/javascript">
+	function startGame() {
+		Game.start();
+	}
+</script>
+
+</body>
 
 </html>

@@ -1,4 +1,4 @@
-window.onresize = function () {
+HTMLCanvasElement.onresize = function () {
     //change the size of the canvas if it isn't equal to the client's size
     var width = window.innerWidth;
     var height = window.innerHeight;

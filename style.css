@@ -1,12 +1,18 @@
-* {
+canvas {
 	margin: 0;
 	top: 0;
 	overflow: hidden;
+    height: 100%;
+    width: 100%;
 }
 
 body {
 	background-color: #DFDFDF;
     text-align: center;
+    margin: 0;
+    top: 0;
+    left: 0;
+    position: relative;
 }
 
 canvas {
@@ -14,22 +20,17 @@ canvas {
     display: block;
 }
 
-#minimap {
-    border-radius: 50%;
-    width: 10vh;
-    height: 10vh;
-}
-
 .popup {
 	position: absolute;
-	z-index: 1;
-	text-align: left;
-	padding: 20px;
-	font-family: sans-serif;
+    top: 65%;
 	background-color: #000000;
 	border: 6px solid #FFFFFF;
-	color: white;
-	overflow: visible;
+	overflow: hidden;
+    height: 30%;
+    width: 90%;
+    margin-left: 5%;
+    margin-right: 5%;
+
 }
 
 .textContainer {
@@ -41,6 +42,11 @@ canvas {
 	height: 30%;
 	width: 30%;
 	border: 3px solid #FFFFFF;
+    margin-left: 35%;
+    margin-right: 35%;
+    margin-top: .5%;
+    color: ghostwhite;
+    font-family: 'Finger Paint'
 }
 
 .dialogueOption {
@@ -49,7 +55,9 @@ canvas {
 	float: left;
 	padding-left: 10px;
 	padding-top: 5px;
-	padding-bottom: 5px
+	padding-bottom: 5px;
+    color: ghostwhite;
+    font-family: 'Ubuntu'
 }
 .dialogueOption:hover {
 	color: #00FF00;
