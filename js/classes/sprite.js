@@ -17,8 +17,8 @@ class Sprite {
 		// Draw onto minimap
 		var xDist = this.x - entities.player.x;
 		var yDist = this.y - entities.player.y;
-
-		if (this.color!==undefined) {
+        
+        if (this.color!==undefined) {
 			ctx.fillStyle = this.color;
 		} else { ctx.fillStyle = "black"; }
 

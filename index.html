@@ -2,6 +2,9 @@
 <html>
 <head>
 	<title>Space Runaway</title>
+    
+    <!-- JQUERY IMPORT -->
+    <script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
 
 	<!-- JAVASCRIPT LINKS -->
 	<script type="text/javascript" src="js/Game.js"></script>
@@ -20,7 +23,13 @@
 
 <body onload="startGame()">
 
-<script>
+<canvas id="gameCanvas">
+    Your browser does not support the HTML5 'canvas' tag.
+</canvas>
+
+<script type="text/javascript">
+    var c = document.getElementById('gameCanvas');
+    var ctx = c.getContext('2d');
 	function startGame() {
 		Game.start();
 	}

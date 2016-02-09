@@ -10,8 +10,8 @@ var minimap = {
 		ctx.arc(this.x, this.y, this.r, 0, 2*Math.PI);
 		ctx.fillStyle = "#EEEECC";
 		ctx.fill();
-
-		for (var i in entities) {
+        
+        for (var i in entities) {
 			entities[i].drawMinimap(ctx);
 		}
 
