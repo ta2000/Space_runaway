@@ -16,6 +16,10 @@ class NPC extends Sprite {
 
 			var div = document.createElement('div');
 			div.className = 'popup';
+			div.style.left = Game.canvas.width/10 + "px";
+			div.style.top = Game.canvas.height/10 + "px";
+			div.style.width = (Game.canvas.width - Game.canvas.width/5)+"px";
+			div.style.height = (Game.canvas.height - Game.canvas.height/5)+"px";
 
 			// Container for query and responses
 			var textContainer = document.createElement('div');
@@ -25,17 +29,15 @@ class NPC extends Sprite {
 			// NPC query
 			var querybox = document.createElement('div');
 			querybox.className = "querybox";
-			var querytext = document.createElement('p');
-			querytext.className = 'querytext';
-            querybox.appendChild(querytext);
-            
+			var querytext = document.createTextNode("");
+			querybox.appendChild(querytext);
 
 			textContainer.appendChild(querybox);
 
 			// Scrolling text
 			var i=0;
 			var textscroll = setInterval(function () {
-				querytext.innerHTML += text.charAt(i);
+				querytext.nodeValue += text.charAt(i);
 				i++;
 				if (i==text.length) {
 					clearInterval(textscroll);
