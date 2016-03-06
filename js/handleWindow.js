@@ -1,13 +1,12 @@
-HTMLCanvasElement.onresize = function () {
-    //change the size of the canvas if it isn't equal to the client's size
-    var width = window.innerWidth;
-    var height = window.innerHeight;
-    if (window.innerWidth !== width || window.innerHeight !== height) {
-        canvasNode.width = width;
-        canvasNode.height = height;
-        HTMLCanvasElement.width = width;
-        HTMLCanvasElement.height = height;
-        HTMLBodyElement.width = width;
-        HTMLBodyElement.height = height;
-    }
+window.onresize = function () {
+    // TODO: Resize minimap
+    // minimap.r =
+    // Relocate minimap
+    minimap.x = minimap.r*2;
+    minimap.y = minimap.r*1.5;
+    // Change the size of the canvas to the window size
+    Game.canvas.width = window.innerWidth;
+    Game.canvas.height = window.innerHeight;
+    // Call setView to focus on the player
+    Game.setView(entities.player);
 };
