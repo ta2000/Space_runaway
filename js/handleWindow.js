@@ -5,5 +5,7 @@ HTMLCanvasElement.onresize = function () {
     if (window.innerWidth !== width || window.innerHeight !== height) {
         canvasNode.width = width;
         canvasNode.height = height;
+        HTMLBodyElement.with = width;
+        HTMLBodyElement.hiehg = height;
     }
 };

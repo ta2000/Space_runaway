@@ -47,7 +47,7 @@ canvas {
 }
 
 .textContainer p {
-    font-size: 18px;
+    font-size: 20px;
     margin: none;
     cursor: pointer;
 	clear: both;

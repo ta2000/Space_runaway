@@ -3,7 +3,7 @@
 class Player extends Sprite {
 	constructor(img,x,y) {
 		super(img,x,y);
-		this.speed = 5;
+		this.speed = 3;
 		this.keysDown = {};
 		this.direction = 90;
 		this.visibleObjs = [];

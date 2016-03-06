@@ -8,7 +8,6 @@
 
     <!-- IMPORT FONTS -->
     <link href='https://fonts.googleapis.com/css?family=Ubuntu|Monda' rel='stylesheet' type='text/css'>
-    <link href='https://fonts.googleapis.com/css?family=Finger+Paint' rel='stylesheet' type='text/css'>
 
 	<!-- JAVASCRIPT LINKS -->
 	<script type="text/javascript" src="js/Game.js"></script>

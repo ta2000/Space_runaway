@@ -27,6 +27,7 @@ class NPC extends Sprite {
 			querybox.className = "querybox";
 			var querytext = document.createTextNode("");
 			querybox.appendChild(querytext);
+
 			textContainer.appendChild(querybox);
 
 			// Scrolling text
@@ -41,7 +42,6 @@ class NPC extends Sprite {
 
             var answerBox = document.createElement('div');
 			answerBox.className = "answerBox";
-            textContainer.appendChild(answerBox);
 
             
 			// Player response options
