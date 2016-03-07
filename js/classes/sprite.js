@@ -4,20 +4,26 @@ class Sprite {
 	constructor(img,x,y) {
 		this.image = new Image();
 		this.image.src = img;
+		this.image.readyToDraw = false;
+		this.image.onload = function (event) {
+			this.image.readyToDraw = true;
+		}.bind(this);
 		this.x = x;
 		this.y = y;
 		this.solid = true;
 	}
 
 	draw( ctx ) {
-		ctx.drawImage(this.image, this.x, this.y);
+		if (this.image.readyToDraw === true) {
+			ctx.drawImage(this.image, this.x, this.y);
+		}
 	}
 
 	drawMinimap( ctx ) {
 		// Draw onto minimap
 		var xDist = this.x - entities.player.x;
 		var yDist = this.y - entities.player.y;
-        
+
         if (this.color!==undefined) {
 			ctx.fillStyle = this.color;
 		} else { ctx.fillStyle = "black"; }

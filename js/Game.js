@@ -122,7 +122,7 @@ var Game = {
 			url = "http://ta2000.github.io/Game/levels/level" + level + ".json";
 		}
 		// Get the images from folder
-		var images = ["images/sprites/player.png", "images/sprites/space_goblin.png", "images/sprites/wall.png"];
+		var images = ["images/sprites/player.png", "images/sprites/space_goblin.png", "images/sprites/goblin_soldier.png", "images/sprites/wall.png", "images/sprites/crewman1.png"];
 
 		var xhttp = new XMLHttpRequest();
 		xhttp.onreadystatechange = function() {
@@ -146,9 +146,9 @@ var Game = {
 						if ( images[obj.board[i].imgIndex -1] != undefined ) {
 							entities['entity'+i] = new Sprite(  images[obj.board[i].imgIndex -1],(obj.board[i].x*Game.scale), (obj.board[i].y*Game.scale) );
 							entities['entity'+i].color = "red";
-							console.log("Error loading tile, no valid class. Created as a Sprite.");
+							console.warn("Tile created as Sprite. Class \"" + obj.board[i].className + "\" does not exist.");
 						} else { // Don't create anything if className and image are invalid
-							console.log("Error loading tile, no valid class or image.");
+							console.warn("Error loading tile, no valid class or image.");
 						}
 					}
 				}
