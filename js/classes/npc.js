@@ -43,7 +43,7 @@ class NPC extends Sprite {
 			answerBox.className = "answerBox";
             textContainer.appendChild(answerBox);
 
-            
+
 			// Player response options
 
 			for (let i = 0; i < options.length; i++) {
@@ -101,11 +101,14 @@ class NPC extends Sprite {
 	}
 
 	dialogue() {
-		var options = [];
-		for (var i = 0; i < this.tree.npcText[this.curretQuery][1].length; i++) {
-			options.push(this.tree.playerText[this.tree.npcText[this.curretQuery][1][i]-1]);
+		// Only create a popup if the npc is saying something
+		if (this.tree.npcText[this.curretQuery] != undefined) {
+			var options = [];
+			for (var i = 0; i < this.tree.npcText[this.curretQuery][1].length; i++) {
+				options.push(this.tree.playerText[this.tree.npcText[this.curretQuery][1][i]-1]);
+			}
+			this.popup(this.tree.npcText[this.curretQuery][0], options);
 		}
-		this.popup(this.tree.npcText[this.curretQuery][0], options);
 	}
 
 }
