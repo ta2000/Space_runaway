@@ -4,9 +4,15 @@ class Sprite {
 	constructor(img,x,y) {
 		this.image = new Image();
 		this.image.src = img;
-		this.image.readyToDraw = false;
+		this.image.exists = true;
+		this.image.loaded = false;
 		this.image.onload = function (event) {
-			this.image.readyToDraw = true;
+			this.image.loaded = true;
+			// If it loads we don't need to check for an error
+			this.image.onerror = null;
+		}.bind(this);
+		this.image.onerror = function (event) {
+			this.image.exists = false;
 		}.bind(this);
 		this.x = x;
 		this.y = y;
@@ -14,7 +20,7 @@ class Sprite {
 	}
 
 	draw( ctx ) {
-		if (this.image.readyToDraw === true) {
+		if (this.image.loaded === true) {
 			ctx.drawImage(this.image, this.x, this.y);
 		}
 	}

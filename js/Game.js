@@ -51,12 +51,16 @@ var Game = {
 		// Entities
 		try {
 			for (var i in entities) {
+				// Call move() if entity can
 				if (entities[i].move!==undefined) {
 					entities[i].move(Game.ctx);
 				}
-			}
-			for (var i in entities) {
+				// Call draw on the entity
 				entities[i].draw(Game.ctx);
+				// Delete entities with invalid images
+				if (!entities[i].image.exists) {
+					delete entities[i];
+				}
 			}
 		} catch (err) {};
 
@@ -122,14 +126,19 @@ var Game = {
 			url = "http://ta2000.github.io/Game/levels/level" + level + ".json";
 		}
 		// Get the images from folder
-		var images = ["images/sprites/player.png", "images/sprites/space_goblin.png", "images/sprites/goblin_soldier.png", "images/sprites/wall.png", "images/sprites/crewman1.png"];
+		var images = [
+			"http://ta2000.github.io/Game/images/sprites/player.png",
+			"http://ta2000.github.io/Game/images/sprites/space_goblin.png",
+			"http://ta2000.github.io/Game/images/sprites/goblin_soldier.png",
+			"http://ta2000.github.io/Game/images/sprites/wall.png",
+			"http://ta2000.github.io/Game/images/sprites/crewman1.png"
+		];
 
 		var xhttp = new XMLHttpRequest();
 		xhttp.onreadystatechange = function() {
 			if (xhttp.readyState == 4) {
 				var json = xhttp.responseText;
-				var obj = {};
-				obj = JSON.parse(json);
+				var obj = JSON.parse(json);
 				for (var i = 0; i < obj.board.length; i++) {
 					try { // If className is valid create normally
 						if ( obj.board[i].imgIndex == 1 ) { // If imgIndex is player imgIndex, set to player
@@ -143,7 +152,7 @@ var Game = {
 							}
 						}
 					} catch (err) { // If className is invalid create as Sprite
-						if ( images[obj.board[i].imgIndex -1] != undefined ) {
+						if ( images[obj.board[i].imgIndex -1] != undefined ) { // Make sure index is within the array
 							entities['entity'+i] = new Sprite(  images[obj.board[i].imgIndex -1],(obj.board[i].x*Game.scale), (obj.board[i].y*Game.scale) );
 							entities['entity'+i].color = "red";
 							console.warn("Tile created as Sprite. Class \"" + obj.board[i].className + "\" does not exist.");
