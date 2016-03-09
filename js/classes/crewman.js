@@ -1,8 +1,8 @@
 "use strict";
 
-class Goblin extends NPC {
+class Crewman extends NPC {
 	constructor(img,x,y) {
 		super(img,x,y);
 	}
 }
-Game.Goblin = Goblin;
+Game.Crewman = Crewman;
