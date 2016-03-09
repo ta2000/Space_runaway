@@ -131,7 +131,7 @@ var Game = {
 			"http://ta2000.github.io/Game/images/sprites/space_goblin.png",
 			"http://ta2000.github.io/Game/images/sprites/goblin_soldier.png",
 			"http://ta2000.github.io/Game/images/sprites/wall.png",
-			"http://ta2000.github.io/Game/images/sprites/crewman1.png"
+			"http://ta2000.github.io/Game/images/sprites/crewman.png"
 		];
 
 		var xhttp = new XMLHttpRequest();
