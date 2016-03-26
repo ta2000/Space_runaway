@@ -27,10 +27,22 @@
 	<link rel="stylesheet" type="text/css" href="style.css">
 </head>
 
-<body onload="startGame()">
+<body>
+	<div class="menuItem" onclick="startGame()">
+		<p class="menuText">Start</p>
+	</div>
+	<div class="menuItem">
+		<p class="menuText">Something Else</p>
+	</div>
+
 
 <script type="text/javascript">
 	function startGame() {
+		// Remove menu
+		while (document.body.firstChild) {
+		    document.body.removeChild(document.body.firstChild);
+		}
+		// Create game
 		Game.start();
 	}
 </script>
