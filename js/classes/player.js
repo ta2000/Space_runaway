@@ -70,12 +70,6 @@ class Player extends Sprite {
 			};
 		}
 		
-		// Regenerate energy
-		if (this.energy < 100)
-		{
-			this.energy+=0.02;
-		}
-		
 	}
 	
 	drawEnergy(ctx)
