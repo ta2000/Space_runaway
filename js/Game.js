@@ -66,6 +66,11 @@ var Game = {
 
 		// Minimap
 		minimap.draw(Game.ctx);
+		// 
+		try {
+			entities.player.drawEnergy(Game.ctx);
+		} catch (err) {};
+		
 
 		window.requestAnimationFrame(Game.draw);
 	},
