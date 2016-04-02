@@ -12,7 +12,9 @@ var minimap = {
 		ctx.fill();
 
         for (var i in entities) {
-			entities[i].drawMinimap(ctx);
+        	for (var j in entities[i]) {
+				entities[i][j].drawMinimap(ctx);
+			}
 		}
 
 		// Outline

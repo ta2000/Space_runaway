@@ -94,7 +94,7 @@ class NPC extends Sprite {
 
 		// Dialogue tree
 		if (this.tree != undefined) {
-			if (this.distance(entities.player) < Game.scale*2 && 69 in entities.player.keysDown) {
+			if (this.distance(entities[0].player) < Game.scale*2 && 69 in entities[0].player.keysDown) {
 				this.dialogue();
 			}
 		}

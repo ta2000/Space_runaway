@@ -17,61 +17,87 @@ class Player extends Sprite {
 		}
 		/*--W--*/
 		if ( 87 in this.keysDown ) {
-			for (var i in entities) { entities[i].y+=this.speed }
+			for (var i in entities) {
+				for (var j in entities[i]) { entities[i][j].y+=this.speed; }
+			}
 			this.y-=this.speed;
 			this.direction = 360;
 		};
 		/*--A--*/
 		if ( 65 in this.keysDown ) {
-			for (var i in entities) { entities[i].x+=this.speed }
+			for (var i in entities) {
+				for (var j in entities[i]) { entities[i][j].x+=this.speed; }
+			}
 			this.x-=this.speed;
 			this.direction = 270;
 		};
 		/*--S--*/
 		if ( 83 in this.keysDown ) {
-			for (var i in entities) { entities[i].y-=this.speed }
+			for (var i in entities) {
+				for (var j in entities[i]) { entities[i][j].y-=this.speed; }
+			}
 			this.y+=this.speed;
 			this.direction = 180;
 		};
 		/*--D--*/
 		if ( 68 in this.keysDown ) {
-			for (var i in entities) { entities[i].x-=this.speed }
+			for (var i in entities) {
+				for (var j in entities[i]) { entities[i][j].x-=this.speed; }
+			}
 			this.x+=this.speed;
 			this.direction = 90;
 		};
 
 		// Collision
 		for (var i in entities) {
-			// Check for goblin soldier collision
-			if (this.collision(entities[i]) && entities[i].constructor == GoblinSoldier)
-			{
-				this.energy--; // Deplete energy
-			}
-			// Check for solid object collision
-			if (entities[i].solid==true) {
-				if (this.collision(entities[i])) {
-					if ( 87 in this.keysDown ) {
-						for (var i in entities) { entities[i].y-=this.speed; }
-						this.y+=this.speed;
-					};
-					if ( 65 in this.keysDown ) {
-						for (var i in entities) { entities[i].x-=this.speed; }
-						this.x+=this.speed;
-					};
-					if ( 83 in this.keysDown ) {
-						for (var i in entities) { entities[i].y+=this.speed; }
-						this.y-=this.speed;
-					};
-					if ( 68 in this.keysDown ) {
-						for (var i in entities) { entities[i].x+=this.speed; }
-						this.x-=this.speed;
+			for (var j in entities[i]) {
+				// Check for goblin soldier collision
+				if (this.collision(entities[i][j]) && entities[i][j].constructor == GoblinSoldier)
+				{
+					this.energy--; // Deplete energy
+				}
+				// Check for solid object collision
+				if (entities[i][j].solid==true) {
+					if (this.collision(entities[i][j])) {
+						if ( 87 in this.keysDown ) {
+							for (var k in entities) {
+								for (var n in entities[k]) {
+										entities[k][n].y-=this.speed;
+								}
+							}
+							this.y+=this.speed;
+						};
+						if ( 65 in this.keysDown ) {
+							for (var k in entities) {
+								for (var n in entities[k]) {
+										entities[k][n].x-=this.speed;
+								}
+							}
+							this.x+=this.speed;
+						};
+						if ( 83 in this.keysDown ) {
+							for (var k in entities) {
+								for (var n in entities[k]) {
+										entities[k][n].y+=this.speed;
+								}
+							}
+							this.y-=this.speed;
+						};
+						if ( 68 in this.keysDown ) {
+							for (var k in entities) {
+								for (var n in entities[k]) {
+										entities[k][n].x+=this.speed;
+								}
+							}
+							this.x-=this.speed;
+						};
 					};
 				};
-			};
+			}
 		}
-		
+
 	}
-	
+
 	drawEnergy(ctx)
 	{
 		// Hud
