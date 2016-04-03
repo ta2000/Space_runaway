@@ -9,7 +9,7 @@ class Player extends Sprite {
 		this.direction = 90;
 	}
 
-	move(ctx) {
+	update(ctx) {
 		if ( 87 in this.keysDown || 65 in this.keysDown || 83 in this.keysDown || 68 in this.keysDown) {
 			if (document.getElementsByClassName('popup')[0]!==undefined) {
 				document.body.removeChild(document.getElementsByClassName('popup')[0]);

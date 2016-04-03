@@ -2,7 +2,7 @@ var entities = {};
 var Game = {
 	levelURL : false,
 	levelNum : 1,
-	scale : 32,
+	scale : 64,
 	params : {},
 	levelID : 0,
 	canvas : document.createElement("canvas"),
@@ -29,9 +29,9 @@ var Game = {
 		// Entities
 		for (var i in entities) {
 			for (var j in entities[i]) {
-				// Call move() if entity can
-				if (entities[i][j].move!==undefined) {
-					entities[i][j].move(Game.ctx);
+				// Call update() if entity can
+				if (entities[i][j].update!==undefined) {
+					entities[i][j].update(Game.ctx);
 				}
 				// Call draw on the entity
 				entities[i][j].draw(Game.ctx);
@@ -108,7 +108,7 @@ var Game = {
 		// Get the images from folder
 		var images = [
 			"http://ta2000.github.io/Game/images/sprites/player.png",
-			"http://ta2000.github.io/Game/images/sprites/space_goblin.png",
+			"images/sprites/space_goblin.png",
 			"http://ta2000.github.io/Game/images/sprites/goblin_soldier.png",
 			"http://ta2000.github.io/Game/images/sprites/wall.png",
 			"http://ta2000.github.io/Game/images/sprites/crewman.png"

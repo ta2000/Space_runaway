@@ -67,7 +67,7 @@ class NPC extends Sprite {
 	}
 
 
-	move(ctx) {
+	update(ctx) {
 		// ======================
 		//  NPC AI CODE GOES HERE
 		// ======================
