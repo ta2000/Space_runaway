@@ -9,11 +9,19 @@ body { /* Makes canvas fullscreen */
     background-color: #DFDFDF;
     background-image: url("http://entropymag.org/wp-content/uploads/2014/10/outer-space-wallpaper-pictures.jpg");
     text-align: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.optionContainer {
+  height: 45%;
+  margin-top: 13.75%;
+  postion: absolute;
 }
 
 .menuItem {
-    width: 250px;
-    height: 100px;
+    width: 35%;
+    height: 15%;
     color: white;
     background-color: #222222;
     display: block;
@@ -27,9 +35,11 @@ body { /* Makes canvas fullscreen */
     -webkit-user-select: none;
     -moz-user-select: none;
 }
+
 .menuItem:hover {
     background-color: #111111;
 }
+
 .menuItem:active {
     color: #AAAAAA;
 }
