@@ -3,52 +3,9 @@ html {
 }
 
 body { /* Makes canvas fullscreen */
-	margin: 0;
-	top: 0;
-	overflow: hidden;
-    background-color: #DFDFDF;
-    background-image: url("http://entropymag.org/wp-content/uploads/2014/10/outer-space-wallpaper-pictures.jpg");
-    text-align: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-}
-
-.optionContainer {
-  height: 45%;
-  margin-top: 13.75%;
-  postion: absolute;
-}
-
-.menuItem {
-    width: 35%;
-    height: 15%;
-    color: white;
-    background-color: #222222;
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 10px;
-    border: 4px solid #BBBBBB;
-    border-radius: 3px;
-    cursor:pointer;
-    /* Prevent highlight */
-    -webkit-user-select: none;
-    -moz-user-select: none;
-}
-
-.menuItem:hover {
-    background-color: #111111;
-}
-
-.menuItem:active {
-    color: #AAAAAA;
-}
-
-.menuText {
-    text-align: center;
-    vertical-align: middle;
-    font-size: 30px;
-    font-family: 'Ubuntu';
+    margin: 0;
+    top: 0;
+    overflow: hidden;
 }
 
 canvas {
@@ -57,18 +14,18 @@ canvas {
 }
 
 .textContainer {
-	position: absolute;
-	overflow: visible;
-	z-index: 1;
-	left: 10%;
+  	position: absolute;
+  	overflow: visible;
+  	z-index: 1;
+  	left: 10%;
     top: 60%;
-	background-color: #000000;
-	border: 6px solid #FFFFFF;
+  	background-color: #000000;
+  	border: 6px solid #FFFFFF;
     height: 30%;
     width: 80%;
     text-align: left;
-	color: white;
-	font-family: 'Ubuntu';
+  	color: white;
+  	font-family: 'Ubuntu';
 }
 
 .querybox {
@@ -77,20 +34,20 @@ canvas {
     margin-right: auto;
     margin-top:2%;
     text-align: center;
-	height: 30%;
-	width: 30%;
-	border: 3px solid #FFFFFF;
+  	height: 30%;
+  	width: 30%;
+  	border: 3px solid #FFFFFF;
 }
 
 .textContainer p {
     font-size: 18px;
     margin: none;
     cursor: pointer;
-	clear: both;
-	float: left;
-	padding-left: 10px;
-	padding-top: 2px;
-	padding-bottom: 2px;
+  	clear: both;
+  	float: left;
+  	padding-left: 10px;
+  	padding-top: 2px;
+  	padding-bottom: 2px;
 }
 
 .dialogueOption {
@@ -98,5 +55,5 @@ canvas {
     margin-bottom: 2px;
 }
 .dialogueOption:hover {
-	color: #00FF00;
+  	color: #00FF00;
 }

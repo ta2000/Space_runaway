@@ -3,13 +3,13 @@
 class Player extends Sprite {
 	constructor(img,x,y) {
 		super(img,x,y);
-		this.speed = 5;
+		this.speed = 250;
 		this.energy = 100;
 		this.keysDown = {};
 		this.direction = 90;
 	}
 
-	update(ctx) {
+	update(ctx, modifier) {
 		if ( 87 in this.keysDown || 65 in this.keysDown || 83 in this.keysDown || 68 in this.keysDown) {
 			if (document.getElementsByClassName('popup')[0]!==undefined) {
 				document.body.removeChild(document.getElementsByClassName('popup')[0]);
@@ -18,33 +18,33 @@ class Player extends Sprite {
 		/*--W--*/
 		if ( 87 in this.keysDown ) {
 			for (var i in entities) {
-				for (var j in entities[i]) { entities[i][j].y+=this.speed; }
+				for (var j in entities[i]) { entities[i][j].y+=(this.speed*modifier); }
 			}
-			this.y-=this.speed;
+			this.y-=(this.speed*modifier);
 			this.direction = 360;
 		};
 		/*--A--*/
 		if ( 65 in this.keysDown ) {
 			for (var i in entities) {
-				for (var j in entities[i]) { entities[i][j].x+=this.speed; }
+				for (var j in entities[i]) { entities[i][j].x+=(this.speed*modifier); }
 			}
-			this.x-=this.speed;
+			this.x-=(this.speed*modifier);
 			this.direction = 270;
 		};
 		/*--S--*/
 		if ( 83 in this.keysDown ) {
 			for (var i in entities) {
-				for (var j in entities[i]) { entities[i][j].y-=this.speed; }
+				for (var j in entities[i]) { entities[i][j].y-=(this.speed*modifier); }
 			}
-			this.y+=this.speed;
+			this.y+=(this.speed*modifier);
 			this.direction = 180;
 		};
 		/*--D--*/
 		if ( 68 in this.keysDown ) {
 			for (var i in entities) {
-				for (var j in entities[i]) { entities[i][j].x-=this.speed; }
+				for (var j in entities[i]) { entities[i][j].x-=(this.speed*modifier); }
 			}
-			this.x+=this.speed;
+			this.x+=(this.speed*modifier);
 			this.direction = 90;
 		};
 
@@ -62,34 +62,34 @@ class Player extends Sprite {
 						if ( 87 in this.keysDown ) {
 							for (var k in entities) {
 								for (var n in entities[k]) {
-										entities[k][n].y-=this.speed;
+										entities[k][n].y-=(this.speed*modifier);
 								}
 							}
-							this.y+=this.speed;
+							this.y+=(this.speed*modifier);
 						};
 						if ( 65 in this.keysDown ) {
 							for (var k in entities) {
 								for (var n in entities[k]) {
-										entities[k][n].x-=this.speed;
+										entities[k][n].x-=(this.speed*modifier);
 								}
 							}
-							this.x+=this.speed;
+							this.x+=(this.speed*modifier);
 						};
 						if ( 83 in this.keysDown ) {
 							for (var k in entities) {
 								for (var n in entities[k]) {
-										entities[k][n].y+=this.speed;
+										entities[k][n].y+=(this.speed*modifier);
 								}
 							}
-							this.y-=this.speed;
+							this.y-=(this.speed*modifier);
 						};
 						if ( 68 in this.keysDown ) {
 							for (var k in entities) {
 								for (var n in entities[k]) {
-										entities[k][n].x+=this.speed;
+										entities[k][n].x+=(this.speed*modifier);
 								}
 							}
-							this.x-=this.speed;
+							this.x-=(this.speed*modifier);
 						};
 					};
 				};
