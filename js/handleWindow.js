@@ -8,5 +8,5 @@ window.onresize = function () {
     Game.canvas.width = window.innerWidth;
     Game.canvas.height = window.innerHeight;
     // Call setView to focus on the player
-    Game.setView(entities[0].player);
+    Game.setView(Game.player, true);
 };

@@ -27,8 +27,8 @@ class Sprite {
 
 	drawMinimap( ctx ) {
 		// Draw onto minimap
-		var xDist = this.x - entities[0].player.x;
-		var yDist = this.y - entities[0].player.y;
+		var xDist = this.x - Game.player.x;
+		var yDist = this.y - Game.player.y;
 
         if (this.color!==undefined) {
 			ctx.fillStyle = this.color;

@@ -44,14 +44,12 @@ var Game = {
 				}
 			}
 		}
+		Game.player.draw(Game.ctx);
+		Game.player.update(Game.ctx, modifier);
+		Game.player.drawEnergy(Game.ctx);
 
 		// Minimap
 		minimap.draw(Game.ctx);
-
-		// Draw energy meter
-		try {
-			entities[0].player.drawEnergy(Game.ctx);
-		} catch (err) {};
 
 		Game.then = now;
 
@@ -60,13 +58,13 @@ var Game = {
 	},
 	// Key handling
 	key_down : function(e) {
-		if (entities[0].player.keysDown!==undefined) {
-			entities[0].player.keysDown[e.keyCode]=true;
+		if (Game.player.keysDown!==undefined) {
+			Game.player.keysDown[e.keyCode]=true;
 		}
 	},
 	key_up : function(e) {
-		if (entities[0].player.keysDown!==undefined) {
-			delete entities[0].player.keysDown[e.keyCode];
+		if (Game.player.keysDown!==undefined) {
+			delete Game.player.keysDown[e.keyCode];
 		}
 	},
 	update_from_params : function () {
@@ -129,7 +127,7 @@ var Game = {
 				for (var i = 0; i < obj.board.length; i++) {
 					try { // If className is valid create normally
 						if ( obj.board[i].imgIndex == 1 ) { // If imgIndex is player imgIndex, set to player
-							entities[Game.levelID].player = new Game[obj.board[i].className]( images[obj.board[i].imgIndex -1], (obj.board[i].x*Game.scale), (obj.board[i].y*Game.scale) );
+							Game.player = new Game[obj.board[i].className]( images[obj.board[i].imgIndex -1], (obj.board[i].x*Game.scale), (obj.board[i].y*Game.scale) );
 						} else { // Otherwise create the object as normal entity with it's className
 							entities[Game.levelID]['entity'+i] = new Game[obj.board[i].className]( images[obj.board[i].imgIndex -1], (obj.board[i].x*Game.scale), (obj.board[i].y*Game.scale) );
 							entities[Game.levelID]['entity'+i].color = "lime";
@@ -149,7 +147,7 @@ var Game = {
 					}
 				}
 				// Set the view on the player
-				Game.setView(entities[0].player);
+				Game.setView(Game.player, true);
 				// Increase levelID
 				Game.levelID++;
 				// Draw after loading
@@ -159,9 +157,13 @@ var Game = {
 		xhttp.open("GET", url, true);
 		xhttp.send();
 	},
-	setView : function(obj) {
+	setView : function(obj, isPlayer) {
 		var xDif = (Game.canvas.width/2.05 - obj.x)
 		var yDif = (Game.canvas.height/2.3 - obj.y);
+		if (isPlayer) {
+			obj.x+=xDif;
+			obj.y+=yDif;
+		}
 		for (var i in entities) {
 			for (var j in entities[i]) {
 				entities[i][j].x+=xDif;

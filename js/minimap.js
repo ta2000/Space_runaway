@@ -16,6 +16,7 @@ var minimap = {
 				entities[i][j].drawMinimap(ctx);
 			}
 		}
+		Game.player.drawMinimap(ctx);
 
 		// Outline
 		ctx.beginPath();
