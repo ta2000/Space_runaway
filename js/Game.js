@@ -36,11 +36,16 @@ var Game = {
 				if (entities[i][j].update!==undefined) {
 					entities[i][j].update(Game.ctx, modifier);
 				}
-				// Call draw on the entity
-				entities[i][j].draw(Game.ctx);
-				// Delete entities with invalid images
-				if (!entities[i][j].image.exists) {
-					delete entities[i][j];
+				// Call draw on the entity if image exists
+				if (entities[i][j].image!==undefined) {
+					// Only draw if not hidden
+					if (entities[i][j].hidden != undefined && entities[i][j].hidden == false) {
+						entities[i][j].draw(Game.ctx);
+					}
+					// Delete entities with invalid images
+					if (!entities[i][j].image.exists) {
+						delete entities[i][j];
+					}
 				}
 			}
 		}
@@ -108,14 +113,6 @@ var Game = {
 			// Gets level from server by number
 			url = "http://ta2000.github.io/Game/levels/level" + level + ".json";
 		}
-		// Get the images from folder
-		var images = [
-			"images/sprites/player.png",
-			"images/sprites/space_goblin.png",
-			"images/sprites/goblin_soldier.png",
-			"images/sprites/wall.png",
-			"images/sprites/crewman.png"
-		];
 
 		entities[Game.levelID] = {};
 
@@ -123,27 +120,33 @@ var Game = {
 		xhttp.onreadystatechange = function() {
 			if (xhttp.readyState == 4) {
 				var json = xhttp.responseText;
-				var obj = JSON.parse(json);
-				for (var i = 0; i < obj.board.length; i++) {
+				var level = JSON.parse(json);
+				for (var i = 0; i < level.board.length; i++) {
 					try { // If className is valid create normally
-						if ( obj.board[i].imgIndex == 1 ) { // If imgIndex is player imgIndex, set to player
-							Game.player = new Game[obj.board[i].className]( images[obj.board[i].imgIndex -1], (obj.board[i].x*Game.scale), (obj.board[i].y*Game.scale) );
-						} else { // Otherwise create the object as normal entity with it's className
-							entities[Game.levelID]['entity'+i] = new Game[obj.board[i].className]( images[obj.board[i].imgIndex -1], (obj.board[i].x*Game.scale), (obj.board[i].y*Game.scale) );
-							entities[Game.levelID]['entity'+i].color = "lime";
-							// Add tree is exists
-							if (obj.board[i].tree != undefined) {
-								entities[Game.levelID]['entity'+i].tree = obj.board[i].tree;
+						// If tile's class is Player assign to Game.player
+						if ( level.board[i].className == "Player" ) {
+							Game.player = new Game[level.board[i].className]( level.board[i].imageURL, (level.board[i].x*Game.scale), (level.board[i].y*Game.scale) );
+						// Otherwise create the levelect as normal entity with it's className
+						} else {
+							// Create entity
+							entities[Game.levelID]['entity'+i] = new Game[level.board[i].className](
+								level.board[i].imageURL,
+								(level.board[i].x*Game.scale),
+								(level.board[i].y*Game.scale)
+							);
+							// Add other properties to entity, including dialogue
+							for (var j in level.board[i]) {
+								if (j != "imageURL" && j != "className") { // Already used these properties
+									if (entities[Game.levelID]['entity'+i][j] == undefined) {
+										entities[Game.levelID]['entity'+i][j] = level.board[i][j];
+									}
+								}
 							}
+							// Set minimap color
+							entities[Game.levelID]['entity'+i].color = "lime"; // Minimap color
 						}
-					} catch (err) { // If className is invalid create as Sprite
-						if ( images[obj.board[i].imgIndex -1] != undefined ) { // Make sure index is within the array
-							entities[Game.levelID]['entity'+i] = new Sprite(  images[obj.board[i].imgIndex -1],(obj.board[i].x*Game.scale), (obj.board[i].y*Game.scale) );
-							entities[Game.levelID]['entity'+i].color = "red";
-							console.warn("Tile created as Sprite. Class \"" + obj.board[i].className + "\" does not exist.");
-						} else { // Don't create anything if className and image are invalid
-							console.warn("Error loading tile, no valid class or image.");
-						}
+					} catch (err) { // Don't create anything if className is invalid
+						console.warn("Could not load tile. Class \"" + level.board[i].className + "\" does not exist.");
 					}
 				}
 				// Set the view on the player
