@@ -11,6 +11,7 @@ var Game = {
 	mouseX: 0,
 	mouseY: 0,
 	levelLoaded : false,
+	test : false,
 	start : function() {
 		this.update_from_params();
 		this.canvas.width = window.innerWidth;

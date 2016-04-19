@@ -11,8 +11,8 @@ var minimap = {
 		ctx.fillStyle = "#EEEECC";
 		ctx.fill();
 
-        for (var i in entities) {
-        	for (var j in entities[i]) {
+    for (var i in entities) {
+    	for (var j in entities[i]) {
 				entities[i][j].drawMinimap(ctx);
 			}
 		}

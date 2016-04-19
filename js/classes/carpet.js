@@ -22,7 +22,7 @@ class Carpet extends Sprite
       img = "carpet3";
     }*/
     super(img, x, y);
-    this.speed = 2;
+    this.speed = .5;
   }
 
   movement(speed)
@@ -64,14 +64,15 @@ class Carpet extends Sprite
     Game.click = false;
   }
 
-  draw(ctx)
+  /*draw(ctx)
 	{
+    Game.Sprite.prototype.draw.call(Game.ctx);
 		if(Game.player.carpet != undefined)
 		{
 			Game.ctx.drawImage(this.image, this.x, this.y);
       console.log('carpetDrawn')
 		}
-	}
+	}*/
 
 }
 

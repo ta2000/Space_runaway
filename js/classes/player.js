@@ -7,7 +7,7 @@ class Player extends Sprite {
 		this.energy = 100;
 		this.keysDown = {};
 		this.direction = 90;
-		this.carpet = {};	
+		this.carpet = {};
 	}
 
 	spawnCarpet()
@@ -15,8 +15,9 @@ class Player extends Sprite {
 		if(Game.click == true)
 		{
 			this.carpet = new Carpet("images/sprites/carpet1.png", this.x, this.y);
+			Game.test = true;
 			Game.player.carpet.draw(Game.ctx);
-			Game.player.carpet.movement(this.	carpet.speed);
+			Game.player.carpet.movement(this.carpet.speed);
 		}
 		else
 		{
