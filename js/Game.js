@@ -17,7 +17,7 @@ var Game = {
 		window.onkeydown = this.key_down;
 		window.onkeyup = this.key_up;
 		// Load the levelURL if its not false, otherwise we load levelNum
-		this.loadLevel(Game.levelURL || Game.levelNum);
+		this.loadLevel(Game.levelURL || Game.levelNum, 0, 0);
 	},
 	clear : function() {
 		Game.ctx.clearRect(0, 0, Game.canvas.width, Game.canvas.height);
@@ -39,7 +39,11 @@ var Game = {
 				// Call draw on the entity if image exists
 				if (entities[i][j].image!==undefined) {
 					// Only draw if not hidden
-					if (entities[i][j].hidden != undefined && entities[i][j].hidden == false) {
+					if (entities[i][j].hidden != undefined) {
+						if (entities[i][j].hidden == "false") {
+							entities[i][j].draw(Game.ctx);
+						}
+					} else { // If hidden is undefined draw it anyways
 						entities[i][j].draw(Game.ctx);
 					}
 					// Delete entities with invalid images
@@ -102,7 +106,7 @@ var Game = {
 		return asObject;
 	},
 	// Level loading and parsing
-	loadLevel : function(level) {
+	loadLevel : function(level, x, y) {
 		var url;
 		// Check if we are loading an offical level or user created
 		// If the level is a number then it is an offical level
@@ -125,14 +129,18 @@ var Game = {
 					try { // If className is valid create normally
 						// If tile's class is Player assign to Game.player
 						if ( level.board[i].className == "Player" ) {
-							Game.player = new Game[level.board[i].className]( level.board[i].imageURL, (level.board[i].x*Game.scale), (level.board[i].y*Game.scale) );
+							Game.player = new Game[level.board[i].className](
+								level.board[i].imageURL,
+								(level.board[i].x*Game.scale)+x,
+								(level.board[i].y*Game.scale)+y
+							);
 						// Otherwise create the levelect as normal entity with it's className
 						} else {
 							// Create entity
 							entities[Game.levelID]['entity'+i] = new Game[level.board[i].className](
 								level.board[i].imageURL,
-								(level.board[i].x*Game.scale),
-								(level.board[i].y*Game.scale)
+								(level.board[i].x*Game.scale)+x,
+								(level.board[i].y*Game.scale)+y
 							);
 							// Add other properties to entity, including dialogue
 							for (var j in level.board[i]) {
