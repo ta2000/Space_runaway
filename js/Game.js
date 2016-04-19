@@ -7,6 +7,10 @@ var Game = {
 	then : 0,
 	levelID : 0,
 	canvas : document.createElement("canvas"),
+	click : false,
+	mouseX: 0,
+	mouseY: 0,
+	levelLoaded : false,
 	start : function() {
 		this.update_from_params();
 		this.canvas.width = window.innerWidth;
@@ -16,6 +20,8 @@ var Game = {
 		// Key handling
 		window.onkeydown = this.key_down;
 		window.onkeyup = this.key_up;
+		//when the canvas is clicked, call the click_up function
+		this.canvas.onclick = this.click_up;
 		// Load the levelURL if its not false, otherwise we load levelNum
 		this.loadLevel(Game.levelURL || Game.levelNum);
 	},
@@ -67,6 +73,13 @@ var Game = {
 			delete Game.player.keysDown[e.keyCode];
 		}
 	},
+	click_up : function(e) {
+		Game.click = true;
+		Game.mouseX = e.clientX;
+		Game.mouseY = e.clientY;
+		console.log('mouse position', Game.mouseX, Game.mouseY);
+		Game.player.spawnCarpet();
+	},
 	update_from_params : function () {
 		// Grab the params from after the pound in the URL
 		this.params = this.page_params();
@@ -114,7 +127,10 @@ var Game = {
 			"images/sprites/space_goblin.png",
 			"images/sprites/goblin_soldier.png",
 			"images/sprites/wall.png",
-			"images/sprites/crewman.png"
+			"images/sprites/crewman.png",
+			"images/sprites/carpet1.png",
+			"images/sprites/carpet2.png",
+			"images/sprites/carpet3.png"
 		];
 
 		entities[Game.levelID] = {};
@@ -156,6 +172,7 @@ var Game = {
 		};
 		xhttp.open("GET", url, true);
 		xhttp.send();
+		this.levelLoaded = true;
 	},
 	setView : function(obj, isPlayer) {
 		var xDif = (Game.canvas.width/2.05 - obj.x)
