@@ -22,7 +22,7 @@ class Carpet extends Sprite
       img = "carpet3";
     }*/
     super(img, x, y);
-    this.speed = .5;
+    this.speed = .000005;
   }
 
   movement(speed)
@@ -30,14 +30,9 @@ class Carpet extends Sprite
     if(Game.click == true)
     {
       var angle = Math.atan2(Game.mouseY, Game.mouseX)
-      var xIncrement = Math.sin(angle) * speed;
-      var yIncrement = Math.cos(angle) * speed;
-      var best = 0;
+      var xIncrement = Math.cos(angle) * speed;
+      var yIncrement = Math.sin(angle) * speed;
       console.log('initial', this.x, this.y);
-      var gameRounded = 1;
-      var thisRounded = 0;
-      while(gameRounded != thisRounded || best < 100)
-      {
         if (Game.mouseX > this.x)
         {
           this.x += xIncrement;
@@ -54,25 +49,11 @@ class Carpet extends Sprite
         {
           this.y -= yIncrement;
         }
-        gameRounded = Math.round(Game.mouseX);
-        thisRounded = Math.round(this.x);
-        best += 1;
-      }
-    }
     console.log('final', this.x, this.y);
     console.log('mousepos:', Game.mouseX, Game.mouseY);
     Game.click = false;
+    }
   }
-
-  /*draw(ctx)
-	{
-    Game.Sprite.prototype.draw.call(Game.ctx);
-		if(Game.player.carpet != undefined)
-		{
-			Game.ctx.drawImage(this.image, this.x, this.y);
-      console.log('carpetDrawn')
-		}
-	}*/
 
 }
 

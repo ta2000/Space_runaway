@@ -7,7 +7,15 @@ class Player extends Sprite {
 		this.energy = 100;
 		this.keysDown = {};
 		this.direction = 90;
-		this.carpet = {};
+	}
+
+	draw(ctx)
+	{
+		Sprite.prototype.draw.call(this, ctx);
+		if (this.carpet != undefined)
+		{
+			Game.player.carpet.draw(ctx);
+		}
 	}
 
 	spawnCarpet()
@@ -16,7 +24,6 @@ class Player extends Sprite {
 		{
 			this.carpet = new Carpet("images/sprites/carpet1.png", this.x, this.y);
 			Game.test = true;
-			Game.player.carpet.draw(Game.ctx);
 			Game.player.carpet.movement(this.carpet.speed);
 		}
 		else
