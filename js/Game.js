@@ -5,6 +5,7 @@ var Game = {
 	scale : 64,
 	params : {},
 	then : 0,
+	mouse : {x:0,y:0,click:false},
 	levelID : 0,
 	canvas : document.createElement("canvas"),
 	start : function() {
@@ -16,6 +17,8 @@ var Game = {
 		// Key handling
 		window.onkeydown = this.key_down;
 		window.onkeyup = this.key_up;
+		//when the canvas is clicked, call the click_up function
+		this.canvas.onclick = this.click_up;
 		// Load the levelURL if its not false, otherwise we load levelNum
 		this.loadLevel(Game.levelURL || Game.levelNum, 0, 0);
 	},
@@ -62,7 +65,6 @@ var Game = {
 
 		Game.then = now;
 
-
 		window.requestAnimationFrame(Game.draw);
 	},
 	// Key handling
@@ -75,6 +77,12 @@ var Game = {
 		if (Game.player.keysDown!==undefined) {
 			delete Game.player.keysDown[e.keyCode];
 		}
+	},
+	click_up : function(e) {
+		Game.mouse.click = true;
+		Game.mouse.x = e.clientX;
+		Game.mouse.y = e.clientY;
+		Game.player.spawnCarpet();
 	},
 	update_from_params : function () {
 		// Grab the params from after the pound in the URL
