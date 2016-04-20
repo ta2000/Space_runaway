@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Game</title>
+
+    <!-- JQUERY IMPORT
+    <script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script-->
+
+    <!-- IMPORT FONTS -->
+    <link href='https://fonts.googleapis.com/css?family=Ubuntu|Monda' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Finger+Paint' rel='stylesheet' type='text/css'>
+
+	<!-- JAVASCRIPT LINKS -->
+	<script type="text/javascript" src="../js/Game.js"></script>
+	<script type="text/javascript" src="../js/minimap.js"></script>
+	<script type="text/javascript" src="../js/handleWindow.js"></script>
+	<!-- CLASSES -->
+	<script type="text/javascript" src="../js/classes/sprite.js"></script>
+	<script type="text/javascript" src="../js/classes/player.js"></script>
+	<script type="text/javascript" src="../js/classes/wall.js"></script>
+	<script type="text/javascript" src="../js/classes/npc.js"></script>
+	<script type="text/javascript" src="../js/classes/goblin.js"></script>
+	<script type="text/javascript" src="../js/classes/goblinSoldier.js"></script>
+	<script type="text/javascript" src="../js/classes/crewman.js"></script>
+	<script type="text/javascript" src="../js/classes/levelExit.js"></script>
+	<script type="text/javascript" src="../js/classes/carpet.js"></script>
+
+	<!-- CSS LINK -->
+	<link rel="stylesheet" type="text/css" href="../css/style.css">
+	<link rel="stylesheet" type="text/css" href="../css/index.css">
+</head>
+
+<body>
+
+	<div class="optionContainer">
+		<div class="menuItem" onclick="startGame()">
+			<p class="menuText">Start</p>
+		</div>
+		<a href="about.html"><div class="menuItem">
+			<p class="menuText">About</p>
+		</div>
+	</div>
+
+<script type="text/javascript">
+	function startGame() {
+		// Remove menu
+		while (document.body.firstChild) {
+		    document.body.removeChild(document.body.firstChild);
+		}
+		// Create game
+		Game.start();
+	}
+</script>
+
+</body>
+
+</html>
