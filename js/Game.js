@@ -138,7 +138,7 @@ var Game = {
 						// If tile's class is Player assign to Game.player
 						if ( level.board[i].className == "Player" ) {
 							Game.player = new Game[level.board[i].className](
-								level.board[i].imageURL,
+								level.images[level.board[i].className],
 								(level.board[i].x*Game.scale)+x,
 								(level.board[i].y*Game.scale)+y
 							);
@@ -146,13 +146,13 @@ var Game = {
 						} else {
 							// Create entity
 							entities[Game.levelID]['entity'+i] = new Game[level.board[i].className](
-								level.board[i].imageURL,
+								level.images[level.board[i].className],
 								(level.board[i].x*Game.scale)+x,
 								(level.board[i].y*Game.scale)+y
 							);
 							// Add other properties to entity, including dialogue
 							for (var j in level.board[i]) {
-								if (j != "imageURL" && j != "className") { // Already used these properties
+								if (j != "className") { // Only needed for loading
 									if (entities[Game.levelID]['entity'+i][j] == undefined) {
 										entities[Game.levelID]['entity'+i][j] = level.board[i][j];
 									}
