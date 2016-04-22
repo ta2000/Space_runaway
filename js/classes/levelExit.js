@@ -3,13 +3,20 @@
 class LevelExit extends Sprite {
 	constructor(img,x,y) {
 		super(img,x,y);
-		this.triggered = false;
 		this.solid = false;
 	}
 
 	update() {
-		if (this.collision(Game.player) && !this.triggered) {
-			if (Game.loadedLevels.indexOf(this.levelToLoad) == -1) {
+		if (this.collision(Game.player)) {
+			// Determine if the level is loaded
+			var levelLoaded = false;
+			for (var i in entities) {
+				if (i == this.levelToLoad) {
+					levelLoaded = true;
+				}
+			}
+			// If the level is not loaded, call loadLevel
+			if (!levelLoaded) {
 				console.log(this);
 				switch (this.direction) {
 					case "left":

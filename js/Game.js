@@ -6,8 +6,6 @@ var Game = {
 	params : {},
 	then : 0,
 	mouse : {x:0,y:0,click:false},
-	levelID : 0,
-	loadedLevels : [],
 	canvas : document.createElement("canvas"),
 	start : function() {
 		this.update_from_params();
@@ -21,7 +19,7 @@ var Game = {
 		//when the canvas is clicked, call the click_up function
 		this.canvas.onclick = this.click_up;
 		// Load the levelURL if its not false, otherwise we load levelNum
-		this.loadLevel(Game.levelURL || "http://ta2000.github.io/Game/levels/level1.json", 0, 0);
+		this.loadLevel(Game.levelURL || "http://ta2000.github.io/Game/levels/level1.json", 0, 0, undefined, this.draw.bind(this));
 	},
 	clear : function() {
 		Game.ctx.clearRect(0, 0, Game.canvas.width, Game.canvas.height);
@@ -115,8 +113,8 @@ var Game = {
 		return asObject;
 	},
 	// Level loading and parsing
-	loadLevel : function(url, x, y, loadPosID) {
-		entities[Game.levelID] = {};
+	loadLevel : function(url, x, y, loadPosID, callback) {
+		entities[url] = {};
 		var xhttp = new XMLHttpRequest();
 		xhttp.onreadystatechange = function() {
 			if (xhttp.readyState == 4) {
@@ -128,16 +126,18 @@ var Game = {
 				for (var i = 0; i < level.board.length; i++) {
 					try { // If className is valid create normally
 						// If tile's class is Player assign to Game.player
-						if ( level.board[i].className == "Player" && Game.player == undefined ) {
-							Game.player = new Game[level.board[i].className](
-								level.images[level.board[i].className],
-								(level.board[i].x*Game.scale)+x,
-								(level.board[i].y*Game.scale)+y
-							);
+						if ( level.board[i].className == "Player" ) {
+							if (Game.player == undefined) {
+								Game.player = new Game[level.board[i].className](
+									level.images[level.board[i].className],
+									(level.board[i].x*Game.scale)+x,
+									(level.board[i].y*Game.scale)+y
+								);
+							}
 						// Otherwise create the object as normal entity with it's className
 						} else {
 							// Create entity
-							entities[Game.levelID]['entity'+i] = new Game[level.board[i].className](
+							entities[url]['entity'+i] = new Game[level.board[i].className](
 								level.images[level.board[i].className],
 								(level.board[i].x*Game.scale)+x,
 								(level.board[i].y*Game.scale)+y
@@ -145,38 +145,34 @@ var Game = {
 							// Add other properties to entity, including dialogue
 							for (var j in level.board[i]) {
 								if (j != "className") { // Only needed for loading
-									if (entities[Game.levelID]['entity'+i][j] == undefined) {
-										entities[Game.levelID]['entity'+i][j] = level.board[i][j];
+									if (entities[url]['entity'+i][j] == undefined) {
+										entities[url]['entity'+i][j] = level.board[i][j];
 									}
 								}
 							}
-							if (entities[Game.levelID]['entity'+i].id != undefined && entities[Game.levelID]['entity'+i].id == loadPosID)
+							if (entities[url]['entity'+i].id != undefined && entities[url]['entity'+i].id == loadPosID)
 							{
-								alignmentX = (entities[Game.levelID]['entity'+i].x - x);
-								alignmentY = (entities[Game.levelID]['entity'+i].y - y);
+								alignmentX = (entities[url]['entity'+i].x - x);
+								alignmentY = (entities[url]['entity'+i].y - y);
 							}
 							// Set minimap color
-							entities[Game.levelID]['entity'+i].color = "lime"; // Minimap color
+							entities[url]['entity'+i].color = "lime"; // Minimap color
 						}
 					} catch (err) { // Don't create anything if className is invalid
 						console.warn("Could not load tile. Class \"" + level.board[i].className + "\" does not exist.");
 					}
 				}
 				// Align level based on levelExit id
-				for (var i in entities[Game.levelID]) {
-					entities[Game.levelID][i].x -= alignmentX;
-					entities[Game.levelID][i].y -= alignmentY;
+				for (var i in entities[url]) {
+					entities[url][i].x -= alignmentX;
+					entities[url][i].y -= alignmentY;
 				}
-
-				// Prevent level from being loaded again
-				Game.loadedLevels.push(url);
 
 				// Set the view on the player
 				Game.setView(Game.player, true);
-				// Increase levelID
-				Game.levelID++;
-				// Draw after loading
-				Game.draw();
+				if (typeof callback === "function") {
+					callback();
+				}
 			}
 		};
 		xhttp.open("GET", url, true);
