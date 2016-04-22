@@ -1,0 +1,35 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+  <title>Game Over :(</title>
+
+  <!-- import css -->
+  <link rel="stylesheet" type="text/css" href="gameOver.css">
+</head>
+
+<body>
+
+  <div class='container'>
+    <div id="overText">
+
+    </div>
+
+    <div class='options'>
+
+    </div>
+  </div>
+
+  <script type="text/javascript">
+    var randomNum;
+    var strings = {"The guards made faces at you until you felt tired", "The goblins were not very hospitable, so you decided to go home", "The carpets were so beautiful, you cried"}
+    randomNum =  Math.random() * (3 - 0) + 0;
+    var para = document.createElement('P');
+    var textToAppend = document.createTextNode(strings[randomNum]);
+    para.appendChild(textToAppend);
+    document.getElementById('overText').appendChild(para)
+  </script>
+
+</body>
+
+</html>
