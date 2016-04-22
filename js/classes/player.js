@@ -38,6 +38,10 @@ class Player extends Sprite {
 			}
 		}
 
+		if(this.energy <= 0) { //changes to the game over screen when the player's energy reaches 0.
+				window.location.href = 'gameOver.html';
+		}
+
 		// Remove popup
 		if ( 87 in this.keysDown || 65 in this.keysDown || 83 in this.keysDown || 68 in this.keysDown) {
 			if (document.getElementsByClassName('popup')[0]!==undefined) {

@@ -1,0 +1,39 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+  <title>Game Over :(</title>
+
+  <!-- import css -->
+  <link rel="stylesheet" type="text/css" href="gameOver.css">
+  <link href='https://fonts.googleapis.com/css?family=Ubuntu|Monda' rel='stylesheet' type='text/css'>
+</head>
+
+<body>
+
+  <div class='container'>
+    <div id="overText">
+
+    </div>
+
+    <div class='options'>
+      <div class='menuOption' id="main"><p>Main Menu</p></div>
+      <div class='menuOption' id='exit'><p>Exit</p></div>
+    </div>
+  </div>
+
+  <script type="text/javascript">
+    var randomNum;
+    var strings = ["You gaze at the guards. At the sight of you, their goblin faces twist into a snarl. You sigh. Ever since you've come to this strange, alien planet, the inhabitants haven't given you the slightest chance. You decide it may be time to go home... ",
+                   "Every since you've arrived at this alien planet, the magnificent architecture of the goblins' has awed you. All of the sturdy housing built into cliffs seems to be unshakable. Perhaps you could get used to living here, amongst the goblins...",
+                   "The intricate patterns in the carpets mezmerize you. The swirling oranges and greens suck you into a deep contemplating stupor. Perhaps you will never find out what makes these carpets so alluring to your eyes..."];
+    randomNum =  Math.floor((Math.random() * 3) + 0);
+    var para = document.createElement('P');
+    var textToAppend = document.createTextNode(strings[randomNum]);
+    para.appendChild(textToAppend);
+    document.getElementById('overText').appendChild(para)
+  </script>
+
+</body>
+
+</html>

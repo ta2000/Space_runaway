@@ -11,6 +11,7 @@ body { /* Makes canvas fullscreen */
 canvas {
     background-color: #BCBCBC;
     display: block;
+    cursor: crosshair;
 }
 
 .textContainer {
