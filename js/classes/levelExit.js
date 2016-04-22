@@ -9,9 +9,11 @@ class LevelExit extends Sprite {
 
 	update() {
 		if (this.collision(Game.player) && !this.triggered) {
-			console.log(this);
-			Game.loadLevel(this.levelToLoad, this.x+this.image.width, this.y+this.image.height);
-			this.triggered = true;
+			if (Game.loadedLevels.indexOf(this.levelToLoad) == -1) {
+				console.log(this);
+				Game.loadLevel(this.levelToLoad, this.x, this.y, this.id);
+				this.triggered = true;
+			}
 		}
 	}
 }

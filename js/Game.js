@@ -7,6 +7,7 @@ var Game = {
 	then : 0,
 	mouse : {x:0,y:0,click:false},
 	levelID : 0,
+	loadedLevels : [],
 	canvas : document.createElement("canvas"),
 	start : function() {
 		this.update_from_params();
@@ -165,6 +166,7 @@ var Game = {
 						console.warn("Could not load tile. Class \"" + level.board[i].className + "\" does not exist.");
 					}
 				}
+				Game.loadedLevels.push(url);
 				// Set the view on the player
 				Game.setView(Game.player, true);
 				// Increase levelID
