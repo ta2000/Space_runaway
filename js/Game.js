@@ -21,7 +21,7 @@ var Game = {
 		//when the canvas is clicked, call the click_up function
 		this.canvas.onclick = this.click_up;
 		// Load the levelURL if its not false, otherwise we load levelNum
-		this.loadLevel(Game.levelURL || Game.levelNum, 0, 0);
+		this.loadLevel(Game.levelURL || "http://ta2000.github.io/Game/levels/level1.json", 0, 0);
 	},
 	clear : function() {
 		Game.ctx.clearRect(0, 0, Game.canvas.width, Game.canvas.height);
@@ -115,20 +115,8 @@ var Game = {
 		return asObject;
 	},
 	// Level loading and parsing
-	loadLevel : function(level, x, y, loadPosID) {
-		var url;
-		// Check if we are loading an offical level or user created
-		// If the level is a number then it is an offical level
-		if (isNaN(level)) {
-			// The level is a url given by the user because it is not a number
-			url = level;
-		} else {
-			// Gets level from server by number
-			url = "http://ta2000.github.io/Game/levels/level" + level + ".json";
-		}
-
+	loadLevel : function(url, x, y, loadPosID) {
 		entities[Game.levelID] = {};
-
 		var xhttp = new XMLHttpRequest();
 		xhttp.onreadystatechange = function() {
 			if (xhttp.readyState == 4) {
@@ -140,7 +128,7 @@ var Game = {
 				for (var i = 0; i < level.board.length; i++) {
 					try { // If className is valid create normally
 						// If tile's class is Player assign to Game.player
-						if ( level.board[i].className == "Player" ) {
+						if ( level.board[i].className == "Player" && Game.player == undefined ) {
 							Game.player = new Game[level.board[i].className](
 								level.images[level.board[i].className],
 								(level.board[i].x*Game.scale)+x,
