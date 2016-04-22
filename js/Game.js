@@ -115,7 +115,7 @@ var Game = {
 		return asObject;
 	},
 	// Level loading and parsing
-	loadLevel : function(level, x, y) {
+	loadLevel : function(level, x, y, loadPosID) {
 		var url;
 		// Check if we are loading an offical level or user created
 		// If the level is a number then it is an offical level
@@ -132,6 +132,9 @@ var Game = {
 		var xhttp = new XMLHttpRequest();
 		xhttp.onreadystatechange = function() {
 			if (xhttp.readyState == 4) {
+				var alignmentX = 0;
+				var alignmentY = 0;
+
 				var json = xhttp.responseText;
 				var level = JSON.parse(json);
 				for (var i = 0; i < level.board.length; i++) {
@@ -143,7 +146,7 @@ var Game = {
 								(level.board[i].x*Game.scale)+x,
 								(level.board[i].y*Game.scale)+y
 							);
-						// Otherwise create the levelect as normal entity with it's className
+						// Otherwise create the object as normal entity with it's className
 						} else {
 							// Create entity
 							entities[Game.levelID]['entity'+i] = new Game[level.board[i].className](
@@ -159,6 +162,11 @@ var Game = {
 									}
 								}
 							}
+							if (entities[Game.levelID]['entity'+i].id != undefined && entities[Game.levelID]['entity'+i].id == loadPosID)
+							{
+								alignmentX = (entities[Game.levelID]['entity'+i].x - x);
+								alignmentY = (entities[Game.levelID]['entity'+i].y - y);
+							}
 							// Set minimap color
 							entities[Game.levelID]['entity'+i].color = "lime"; // Minimap color
 						}
@@ -166,7 +174,15 @@ var Game = {
 						console.warn("Could not load tile. Class \"" + level.board[i].className + "\" does not exist.");
 					}
 				}
+				// Align level based on levelExit id
+				for (var i in entities[Game.levelID]) {
+					entities[Game.levelID][i].x -= alignmentX;
+					entities[Game.levelID][i].y -= alignmentY;
+				}
+
+				// Prevent level from being loaded again
 				Game.loadedLevels.push(url);
+
 				// Set the view on the player
 				Game.setView(Game.player, true);
 				// Increase levelID
