@@ -6,6 +6,7 @@ var Game = {
 	params : {},
 	then : 0,
 	mouse : {x:0,y:0,click:false},
+	trackLevelExits : {},
 	canvas : document.createElement("canvas"),
 	start : function() {
 		this.update_from_params();
@@ -19,7 +20,16 @@ var Game = {
 		//when the canvas is clicked, call the click_up function
 		this.canvas.onclick = this.click_up;
 		// Load the levelURL if its not false, otherwise we load levelNum
-		this.loadLevel(Game.levelURL || "http://ta2000.github.io/Game/levels/level1.json", 0, 0, -1, this.draw.bind(this));
+		var firstLoad = {
+			levelLoadOpX: function () {
+				return 0;
+			},
+			levelLoadOpY: function () {
+				return 0;
+			},
+			loadPosID: undefined
+		};
+		this.loadLevel(Game.levelURL || "http://ta2000.github.io/Game/levels/level1.json", firstLoad, this.draw.bind(this));
 	},
 	clear : function() {
 		Game.ctx.clearRect(0, 0, Game.canvas.width, Game.canvas.height);
@@ -31,6 +41,23 @@ var Game = {
 		var delta = now - Game.then;
 		var modifier = delta / 1000;
 
+		var exitInView = {};
+		for (var i in Game.trackLevelExits) {
+			exitInView[i] = true;
+			for (var j in Game.trackLevelExits[i]) {
+				if (Game.trackLevelExits[i][j].distance(Game.player) > (Game.canvas.width * 4)) {
+					console.log(i, "is not in view");
+					exitInView[i] = false;
+				}
+			}
+		}
+		for (var i in exitInView) {
+			if (exitInView[i] === false) {
+				console.log("Unloading level", i);
+				delete Game.trackLevelExits[i];
+				delete entities[i];
+			}
+		}
 		// Entities
 		for (var i in entities) {
 			for (var j in entities[i]) {
@@ -113,11 +140,15 @@ var Game = {
 		return asObject;
 	},
 	// Level loading and parsing
-	loadLevel : function(url, x, y, loadPosID, callback) {
+	loadLevel : function(url, align, callback) {
 		entities[url] = {};
+		Game.trackLevelExits[url] = {};
 		var xhttp = new XMLHttpRequest();
 		xhttp.onreadystatechange = function() {
 			if (xhttp.readyState == 4) {
+				var x = align.levelLoadOpX();
+				var y = align.levelLoadOpY();
+				var loadPosID = align.id;
 				var alignmentX = 0;
 				var alignmentY = 0;
 
@@ -142,6 +173,9 @@ var Game = {
 								(level.board[i].x*Game.scale)+x,
 								(level.board[i].y*Game.scale)+y
 							);
+							if (level.board[i].className === "LevelExit") {
+								Game.trackLevelExits[url]['entity'+i] = entities[url]['entity'+i];
+							}
 							// Add other properties to entity, including dialogue
 							for (var j in level.board[i]) {
 								if (j != "className") { // Only needed for loading
@@ -150,7 +184,7 @@ var Game = {
 									}
 								}
 							}
-							if (entities[url]['entity'+i].id != -1 && entities[url]['entity'+i].id == loadPosID)
+							if (entities[url]['entity'+i].id != undefined && entities[url]['entity'+i].id == loadPosID)
 							{
 								alignmentX = (entities[url]['entity'+i].x - x);
 								alignmentY = (entities[url]['entity'+i].y - y);

@@ -6,7 +6,6 @@ class Player extends Sprite {
 		this.speed = 250;
 		this.energy = 100;
 		this.keysDown = {};
-		this.direction = 90;
 		this.carpets = [];
 	}
 
@@ -38,8 +37,9 @@ class Player extends Sprite {
 			}
 		}
 
-		if(this.energy <= 0) { //changes to the game over screen when the player's energy reaches 0.
-				window.location.href = 'gameOver.html';
+		// Changes to the game over screen when the player's energy reaches zero
+		if( this.energy <= 0) {
+			window.location.href = 'gameOver.html';
 		}
 
 		// Remove popup
