@@ -1,0 +1,83 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+  <title>Game Over :(</title>
+
+  <!-- import css -->
+  <link rel="stylesheet" type="text/css" href="gameOver.css">
+  <link href='https://fonts.googleapis.com/css?family=Ubuntu|Monda' rel='stylesheet' type='text/css'>
+</head>
+
+<body id="body">
+
+  <div class='container'>
+    <div id="overText">
+
+    </div>
+
+    <div class='options'>
+      <a href='index.html'><div class='menuOption' id="main"><p>Main Menu</p></div></a>
+      <div class='menuOption' id='exit' onclick='anAlert()'><p>Exit</p></div>
+    </div>
+  </div>
+
+  <script type="text/javascript">
+    var randomNum;
+    var strings = ["You gaze at the guards. At the sight of you, their goblin faces twist into a snarl. You sigh. Ever since you've come to this strange, alien planet, the inhabitants haven't given you the slightest chance. You decide it may be time to go home... ",
+                   "Every since you've arrived at this alien planet, the magnificent architecture of the goblins' has awed you. All of the sturdy housing built into cliffs seems to be unshakable. Perhaps you could get used to living here, amongst the goblins...",
+                   "The intricate patterns in the carpets mezmerize you. The swirling oranges and greens suck you into a deep contemplating stupor. Perhaps you will never find out what makes these carpets so alluring to your eyes..."];
+    randomNum =  Math.floor((Math.random() * 3) + 0);
+    var para = document.createElement('P');
+    var textToAppend = document.createTextNode(strings[randomNum]);
+    para.appendChild(textToAppend);
+    document.getElementById('overText').appendChild(para)
+  </script>
+
+  <script type="text/javascript">
+    function anAlert() {
+      alert('You wanted to exit the game!\nWe would close this window with code if we could, but js safety measures means that we cant :(\nPlease close it manually.');
+    }
+
+    //ALL OF THE FOLLOWING WAS AN ATTEMPT TO GET THE BACKGROUND COLOR
+    //TO GO THROUGH THE RAINBOW. IT DID NOT WORK SOON ENOUGH
+    /*var decimalNum;
+    var hexString = "#111111";
+    var i = 1418482;
+    var goingUp = true;
+
+    function convertToDecimal(string) {
+      var onlyHex = string.slice(1,7);
+      decimalNum = parseInt(onlyHex, 16);
+      console.log(decimalNum);
+    }
+
+    function convertToHex(num) {
+      var standardHexString = num.toString(16);
+      hexString = '#' + standardHexString;
+      console.log(hexString);
+    }
+
+    while(i < 12303291 && i > 1418481){
+      document.getElementById('body').style.backgroundColor = hexString;
+      convertToDecimal(hexString);
+      if (i ==  12303290) {
+        goingUp = false
+      } else if (i == 1418482) {
+        goingUp = true;
+      }
+      if (goingUp == true){
+        i ++;
+        decimalNum += 1;
+      } else {
+        i --;
+        decimalNum -= 1;
+      }
+      convertToHex(decimalNum);
+    }*/
+
+  </script>
+
+</body>
+
+</html>

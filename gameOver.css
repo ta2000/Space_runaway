@@ -1,0 +1,72 @@
+.html {
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+#body {
+  width: 100%;
+  height: 100%;
+  background-color: #111111;
+  background-size: auto;
+  overflow: hidden;
+}
+
+#overText {
+  margin-top: 5%;
+  text-align: center;
+  font-size: 37px;
+  width: 80%;
+  margin-left: 10%;
+  margin-right: 10%;
+  height: 30%;
+  font-family: 'Monda';
+  color: ghostwhite;
+}
+
+.options {
+  margin-top: 3%;
+  width: 60%;
+  margin-left: 20%;
+  margin-right: 20%;
+  text-align: center;
+  font-size: 30px;
+}
+
+.menuOption {
+  border: 6px solid #BBBBBB;
+  background-color: #222222;
+  color: ghostwhite;
+  border-radius: 3px;
+  cursor: pointer;
+  font-family: 'Monda'
+}
+
+#main {
+  width: 40%;
+  margin-left: 4%;
+  margin-right: 2%;
+  float: left;
+}
+
+#exit {
+  width: 40%;
+  margin-left: 2%;
+  margin-right: 4%;
+  float: right;
+}
+
+.menuOption:hover {
+    background-color: #111111;
+}
+
+.menuOption:active {
+    color: #AAAAAA;
+}
+
+a:hover, a:visited, a:link, a:active
+{
+    text-decoration: none;
+}

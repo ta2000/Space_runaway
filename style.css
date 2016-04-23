@@ -1,11 +1,61 @@
-body {
-	background-color: #DFDFDF;
-    text-align: center;
+html {
+    overflow:hidden;
+}
+
+body { /* Makes canvas fullscreen */
+    margin: 0;
+    top: 0;
+    overflow: hidden;
+    background-position: top;
 }
 
 canvas {
-	border: 2px solid black;
-    background-color: #FFFFFF;
-    /* Aligns center horizontally */
-    display: inline;
+    background-color: #BCBCBC;
+    display: block;
+    cursor: crosshair;
+}
+
+.textContainer {
+  	position: absolute;
+  	overflow: visible;
+  	z-index: 1;
+  	left: 10%;
+    top: 60%;
+  	background-color: #000000;
+  	border: 6px solid #FFFFFF;
+    height: 30%;
+    width: 80%;
+    text-align: left;
+  	color: white;
+  	font-family: 'Ubuntu';
+}
+
+.querybox {
+    font-family: 'Finger Paint';
+    margin-left: auto;
+    margin-right: auto;
+    margin-top:2%;
+    text-align: center;
+  	height: 30%;
+  	width: 30%;
+  	border: 3px solid #FFFFFF;
+}
+
+.textContainer p {
+    font-size: 18px;
+    margin: none;
+    cursor: pointer;
+  	clear: both;
+  	float: left;
+  	padding-left: 10px;
+  	padding-top: 2px;
+  	padding-bottom: 2px;
+}
+
+.dialogueOption {
+    margin-top: 2px;
+    margin-bottom: 2px;
+}
+.dialogueOption:hover {
+  	color: #00FF00;
 }
