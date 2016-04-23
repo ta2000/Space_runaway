@@ -1,4 +1,5 @@
 var entities = {};
+var backgroundTiles = {};
 var Game = {
 	levelURL : false,
 	levelNum : 1,
@@ -19,6 +20,21 @@ var Game = {
 		window.onkeyup = this.key_up;
 		//when the canvas is clicked, call the click_up function
 		this.canvas.onclick = this.click_up;
+		// Create background tiles
+		var tiles = 0;
+		for (var i=-128; i< Game.canvas.width+128; i+=128) {
+			for (var j=-128; j<Game.canvas.height+128; j+=128) {
+				backgroundTiles['backgroundTile'+tiles] = new BackgroundTile(
+					["images/sprites/grass1.png",
+					"images/sprites/grass2.png",
+					"images/sprites/grass3.png",
+					"images/sprites/grass4.png"],
+					i,
+					j
+				);
+				tiles++;
+			}
+		}
 		// Load the levelURL if its not false, otherwise we load levelNum
 		var firstLoad = {
 			levelLoadOpX: function () {
@@ -57,6 +73,11 @@ var Game = {
 				delete Game.trackLevelExits[i];
 				delete entities[i];
 			}
+		}
+		// Background tiles
+		for (var i in backgroundTiles) {
+			backgroundTiles[i].update();
+			backgroundTiles[i].draw(Game.ctx);
 		}
 		// Entities
 		for (var i in entities) {
