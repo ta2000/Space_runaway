@@ -27,7 +27,6 @@ class LevelExit extends Sprite {
 							return this.y;
 						};
 						Game.loadLevel(this.levelToLoad, this);
-						// Game.loadLevel(this.levelToLoad, this.x-Game.scale, this.y, this.id);
 						break;
 					case "right":
 						this.levelLoadOpX = function () {
@@ -37,7 +36,6 @@ class LevelExit extends Sprite {
 							return this.y;
 						};
 						Game.loadLevel(this.levelToLoad, this);
-						// Game.loadLevel(this.levelToLoad, this.x+Game.scale, this.y, this.id);
 						break;
 					case "up":
 						this.levelLoadOpX = function () {
@@ -47,7 +45,6 @@ class LevelExit extends Sprite {
 							return this.y - Game.scale;
 						};
 						Game.loadLevel(this.levelToLoad, this);
-						// Game.loadLevel(this.levelToLoad, this.x, this.y-Game.scale, this.id);
 						break;
 					case "down":
 						this.levelLoadOpX = function () {
@@ -57,7 +54,6 @@ class LevelExit extends Sprite {
 							return this.y + Game.scale;
 						};
 						Game.loadLevel(this.levelToLoad, this);
-						// Game.loadLevel(this.levelToLoad, this.x, this.y+Game.scale, this.id);
 						break;
 					default:
 						console.error("Could not load level: direction unspecified.");

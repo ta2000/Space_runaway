@@ -50,6 +50,12 @@ class Player extends Sprite {
 		}
 		/*--W--*/
 		if ( 87 in this.keysDown ) {
+			for (var i in backgroundTiles) { // Move background tiles
+				backgroundTiles[i].y+=(this.speed*modifier);
+				if (backgroundTiles[i].y > Game.canvas.height) {
+					backgroundTiles[i].y -= (Game.canvas.height+backgroundTiles[i].image.height);
+				}
+			}
 			for (var i in entities) { // Move entities
 				for (var j in entities[i]) { entities[i][j].y+=(this.speed*modifier); }
 			}
@@ -60,6 +66,12 @@ class Player extends Sprite {
 		};
 		/*--A--*/
 		if ( 65 in this.keysDown ) {
+			for (var i in backgroundTiles) { // Move background tiles
+				backgroundTiles[i].x+=(this.speed*modifier);
+				if (backgroundTiles[i].x > Game.canvas.width) {
+					backgroundTiles[i].x -= (Game.canvas.width+backgroundTiles[i].image.height);
+				}
+			}
 			for (var i in entities) { // Move entities
 				for (var j in entities[i]) { entities[i][j].x+=(this.speed*modifier); }
 			}
@@ -70,6 +82,12 @@ class Player extends Sprite {
 		};
 		/*--S--*/
 		if ( 83 in this.keysDown ) {
+			for (var i in backgroundTiles) { // Move background tiles
+				backgroundTiles[i].y-=(this.speed*modifier);
+				if (backgroundTiles[i].y+backgroundTiles[i].image.height < 0) {
+					backgroundTiles[i].y += (Game.canvas.height+backgroundTiles[i].image.height);
+				}
+			}
 			for (var i in entities) { // Move entities
 				for (var j in entities[i]) { entities[i][j].y-=(this.speed*modifier); }
 			}
@@ -80,6 +98,12 @@ class Player extends Sprite {
 		};
 		/*--D--*/
 		if ( 68 in this.keysDown ) {
+			for (var i in backgroundTiles) { // Move background tiles
+				backgroundTiles[i].x-=(this.speed*modifier);
+				if (backgroundTiles[i].x+backgroundTiles[i].image.height < 0) {
+					backgroundTiles[i].x += (Game.canvas.width+backgroundTiles[i].image.width);
+				}
+			}
 			for (var i in entities) { // Move entities
 				for (var j in entities[i]) { entities[i][j].x-=(this.speed*modifier); }
 			}
@@ -90,47 +114,13 @@ class Player extends Sprite {
 		};
 
 		// Collision
+		var collision = false;
 		for (var i in entities) {
 			for (var j in entities[i]) {
 				// Check for solid object collision
 				if (entities[i][j].solid==true) {
 					if (this.collision(entities[i][j])) {
-						if ( 87 in this.keysDown ) {
-							for (var k in entities) { // Move entities
-								for (var n in entities[k]) { entities[k][n].y-=(this.speed*modifier); }
-							}
-							for (var k=0; k<this.carpets.length; k++) { // Move carpets
-								this.carpets[k].y-=(this.speed*modifier);
-								this.carpets[k].targetY-=(this.speed*modifier);
-							}
-						}
-						if ( 65 in this.keysDown ) {
-							for (var k in entities) { // Move entities
-								for (var n in entities[k]) { entities[k][n].x-=(this.speed*modifier); }
-							}
-							for (var k=0; k<this.carpets.length; k++) { // Move carpets
-								this.carpets[k].x-=(this.speed*modifier);
-								this.carpets[k].targetX-=(this.speed*modifier);
-							}
-						}
-						if ( 83 in this.keysDown ) {
-							for (var k in entities) { // Move entities
-								for (var n in entities[k]) { entities[k][n].y+=(this.speed*modifier); }
-							}
-							for (var k=0; k<this.carpets.length; k++) { // Move carpets
-								this.carpets[k].y+=(this.speed*modifier);
-								this.carpets[k].targetY+=(this.speed*modifier);
-							}
-						}
-						if ( 68 in this.keysDown ) {
-							for (var k in entities) { // Move entities
-								for (var n in entities[k]) { entities[k][n].x+=(this.speed*modifier); }
-							}
-							for (var k=0; k<this.carpets.length; k++) { // Move carpets
-								this.carpets[k].x+=(this.speed*modifier);
-								this.carpets[k].targetX+=(this.speed*modifier);
-							}
-						}
+						collision = true;
 						// Check for goblin soldier collision
 						if (entities[i][j].constructor == GoblinSoldier)
 						{
@@ -140,7 +130,56 @@ class Player extends Sprite {
 				}
 			}
 		}
-
+		if (collision) {
+			if ( 87 in this.keysDown ) {
+				for (var i in backgroundTiles) { // Move background tiles
+					backgroundTiles[i].y-=(this.speed*modifier);
+				}
+				for (var k in entities) { // Move entities
+					for (var n in entities[k]) { entities[k][n].y-=(this.speed*modifier); }
+				}
+				for (var k=0; k<this.carpets.length; k++) { // Move carpets
+					this.carpets[k].y-=(this.speed*modifier);
+					this.carpets[k].targetY-=(this.speed*modifier);
+				}
+			}
+			if ( 65 in this.keysDown ) {
+				for (var i in backgroundTiles) { // Move background tiles
+					backgroundTiles[i].x-=(this.speed*modifier);
+				}
+				for (var k in entities) { // Move entities
+					for (var n in entities[k]) { entities[k][n].x-=(this.speed*modifier); }
+				}
+				for (var k=0; k<this.carpets.length; k++) { // Move carpets
+					this.carpets[k].x-=(this.speed*modifier);
+					this.carpets[k].targetX-=(this.speed*modifier);
+				}
+			}
+			if ( 83 in this.keysDown ) {
+				for (var i in backgroundTiles) { // Move background tiles
+					backgroundTiles[i].y+=(this.speed*modifier);
+				}
+				for (var k in entities) { // Move entities
+					for (var n in entities[k]) { entities[k][n].y+=(this.speed*modifier); }
+				}
+				for (var k=0; k<this.carpets.length; k++) { // Move carpets
+					this.carpets[k].y+=(this.speed*modifier);
+					this.carpets[k].targetY+=(this.speed*modifier);
+				}
+			}
+			if ( 68 in this.keysDown ) {
+				for (var i in backgroundTiles) { // Move background tiles
+					backgroundTiles[i].x+=(this.speed*modifier);
+				}
+				for (var k in entities) { // Move entities
+					for (var n in entities[k]) { entities[k][n].x+=(this.speed*modifier); }
+				}
+				for (var k=0; k<this.carpets.length; k++) { // Move carpets
+					this.carpets[k].x+=(this.speed*modifier);
+					this.carpets[k].targetX+=(this.speed*modifier);
+				}
+			}
+		}
 	}
 
 	drawEnergy(ctx)
