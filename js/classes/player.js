@@ -6,7 +6,6 @@ class Player extends Sprite {
 		this.speed = 250;
 		this.energy = 100;
 		this.keysDown = {};
-		this.direction = 90;
 		this.carpets = [];
 	}
 

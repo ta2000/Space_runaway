@@ -18,19 +18,46 @@ class LevelExit extends Sprite {
 			}
 			// If the level is not loaded, call loadLevel
 			if (!levelLoaded) {
-				console.log(this);
 				switch (this.direction) {
 					case "left":
-						Game.loadLevel(this.levelToLoad, this.x-Game.scale, this.y, this.id);
+						this.levelLoadOpX = function () {
+							return this.x - Game.scale;
+						};
+						this.levelLoadOpY = function () {
+							return this.y;
+						};
+						Game.loadLevel(this.levelToLoad, this);
+						// Game.loadLevel(this.levelToLoad, this.x-Game.scale, this.y, this.id);
 						break;
 					case "right":
-						Game.loadLevel(this.levelToLoad, this.x+Game.scale, this.y, this.id);
+						this.levelLoadOpX = function () {
+							return this.x + Game.scale;
+						};
+						this.levelLoadOpY = function () {
+							return this.y;
+						};
+						Game.loadLevel(this.levelToLoad, this);
+						// Game.loadLevel(this.levelToLoad, this.x+Game.scale, this.y, this.id);
 						break;
 					case "up":
-						Game.loadLevel(this.levelToLoad, this.x, this.y-Game.scale, this.id);
+						this.levelLoadOpX = function () {
+							return this.x;
+						};
+						this.levelLoadOpY = function () {
+							return this.y - Game.scale;
+						};
+						Game.loadLevel(this.levelToLoad, this);
+						// Game.loadLevel(this.levelToLoad, this.x, this.y-Game.scale, this.id);
 						break;
 					case "down":
-						Game.loadLevel(this.levelToLoad, this.x, this.y+Game.scale, this.id);
+						this.levelLoadOpX = function () {
+							return this.x;
+						};
+						this.levelLoadOpY = function () {
+							return this.y + Game.scale;
+						};
+						Game.loadLevel(this.levelToLoad, this);
+						// Game.loadLevel(this.levelToLoad, this.x, this.y+Game.scale, this.id);
 						break;
 					default:
 						console.error("Could not load level: direction unspecified.");
