@@ -5,7 +5,7 @@ var Game = {
 	levelNum : 1,
 	scale : 64,
 	params : {},
-	then : 0,
+	then : Date.now(),
 	mouse : {x:0,y:0,click:false},
 	trackLevelExits : {},
 	canvas : document.createElement("canvas"),
@@ -84,7 +84,7 @@ var Game = {
 			for (var j in entities[i]) {
 				// Call update() if entity can
 				if (entities[i][j].update!==undefined) {
-					entities[i][j].update(Game.ctx, modifier);
+					entities[i][j].update(modifier);
 				}
 				// Call draw on the entity if image exists
 				if (entities[i][j].image!==undefined) {
@@ -104,7 +104,7 @@ var Game = {
 			}
 		}
 		Game.player.draw(Game.ctx);
-		Game.player.update(Game.ctx, modifier);
+		Game.player.update(modifier);
 		Game.player.drawEnergy(Game.ctx);
 
 		// Minimap

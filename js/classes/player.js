@@ -26,7 +26,7 @@ class Player extends Sprite {
 		}
 	}
 
-	update(ctx, modifier) {
+	update(modifier) {
 		// Update all carpets
 		for (var i=0; i<this.carpets.length; i++)
 		{
