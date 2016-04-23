@@ -7,6 +7,7 @@ class Player extends Sprite {
 		this.energy = 100;
 		this.keysDown = {};
 		this.carpets = [];
+		this.imgIndex = 0;
 	}
 
 	draw(ctx)
@@ -27,6 +28,16 @@ class Player extends Sprite {
 	}
 
 	update(modifier) {
+		if (Object.keys(this.keysDown).length === 0) {
+			this.imgIndex = 0;
+		} else {
+			this.imgIndex++;
+			if (this.imgIndex == 7) {
+				this.imgIndex = 0;
+			}
+		}
+		this.image.src = "http://ta2000.github.io/Game/images/sprites/player" + this.imgIndex + ".png"
+
 		// Update all carpets
 		for (var i=0; i<this.carpets.length; i++)
 		{
