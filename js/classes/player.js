@@ -36,7 +36,7 @@ class Player extends Sprite {
 				this.imgIndex = 0;
 			}
 		}
-		this.image.src = "http://ta2000.github.io/Game/images/sprites/player" + this.imgIndex + ".png"
+		this.image.src = "http://ta2000.github.io/Game/images/sprites/player/player" + this.imgIndex + ".png"
 
 		// Update all carpets
 		for (var i=0; i<this.carpets.length; i++)
