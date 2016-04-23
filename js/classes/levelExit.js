@@ -3,12 +3,12 @@
 class LevelExit extends Sprite {
 	constructor(img,x,y) {
 		super(img,x,y);
-		this.hidden = true;
+		// this.hidden = true;
 		this.solid = false;
 	}
 
 	update() {
-		if (this.distance(Game.player) < Game.canvas.width) {
+		if (this.collision(Game.player)) {
 			// Determine if the level is loaded
 			var levelLoaded = false;
 			for (var i in entities) {
@@ -21,16 +21,45 @@ class LevelExit extends Sprite {
 				console.log(this);
 				switch (this.direction) {
 					case "left":
-						Game.loadLevel(this.levelToLoad, this.x-Game.scale, this.y, this.id);
+						this.levelLoadOpX = function () {
+							return this.x - Game.scale;
+						};
+						this.levelLoadOpY = function () {
+							return this.y;
+						};
+						Game.loadLevel(this.levelToLoad, this);
+						// Game.loadLevel(this.levelToLoad, this.x-Game.scale, this.y, this.id);
 						break;
 					case "right":
-						Game.loadLevel(this.levelToLoad, this.x+Game.scale, this.y, this.id);
+						this.levelLoadOpX = function () {
+							console.log(this, this.x);
+							return this.x + Game.scale;
+						};
+						this.levelLoadOpY = function () {
+							return this.y;
+						};
+						Game.loadLevel(this.levelToLoad, this);
+						// Game.loadLevel(this.levelToLoad, this.x+Game.scale, this.y, this.id);
 						break;
 					case "up":
-						Game.loadLevel(this.levelToLoad, this.x, this.y-Game.scale, this.id);
+						this.levelLoadOpX = function () {
+							return this.x;
+						};
+						this.levelLoadOpY = function () {
+							return this.y - Game.scale;
+						};
+						Game.loadLevel(this.levelToLoad, this);
+						// Game.loadLevel(this.levelToLoad, this.x, this.y-Game.scale, this.id);
 						break;
 					case "down":
-						Game.loadLevel(this.levelToLoad, this.x, this.y+Game.scale, this.id);
+						this.levelLoadOpX = function () {
+							return this.x;
+						};
+						this.levelLoadOpY = function () {
+							return this.y + Game.scale;
+						};
+						Game.loadLevel(this.levelToLoad, this);
+						// Game.loadLevel(this.levelToLoad, this.x, this.y+Game.scale, this.id);
 						break;
 					default:
 						console.error("Could not load level: direction unspecified.");
