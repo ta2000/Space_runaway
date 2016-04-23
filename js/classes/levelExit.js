@@ -3,11 +3,12 @@
 class LevelExit extends Sprite {
 	constructor(img,x,y) {
 		super(img,x,y);
+		this.hidden = true;
 		this.solid = false;
 	}
 
 	update() {
-		if (this.collision(Game.player)) {
+		if (this.distance(Game.player) < Game.canvas.width) {
 			// Determine if the level is loaded
 			var levelLoaded = false;
 			for (var i in entities) {
