@@ -7,7 +7,7 @@ class LevelExit extends Sprite {
 		this.solid = false;
 	}
 
-	update() {
+	update(modifier) {
 		if (this.distance(Game.player) < Game.canvas.width) {
 			// Determine if the level is loaded
 			var levelLoaded = false;

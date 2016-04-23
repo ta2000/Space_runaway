@@ -44,6 +44,12 @@
 
 <script type="text/javascript">
 	function startGame() {
+		var myAudio = new Audio('music/Courtyard.wav');
+		myAudio.addEventListener('ended', function() {
+		    this.currentTime = 0;
+		    this.play();
+		}, false);
+		myAudio.play();
 		// Remove menu
 		while (document.body.firstChild) {
 		    document.body.removeChild(document.body.firstChild);

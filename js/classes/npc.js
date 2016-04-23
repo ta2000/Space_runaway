@@ -3,10 +3,9 @@
 class NPC extends Sprite {
 	constructor(img,x,y) {
 		super(img,x,y);
-		this.speed = 0.8;
+		this.speed = 100;
 		this.tree;
 		this.curretQuery = 0;
-		this.direction;
 		this.currentSteps = 0;
 	}
 
@@ -59,15 +58,23 @@ class NPC extends Sprite {
 					document.body.removeChild(document.getElementsByClassName('popup')[0]);
 					obj.dialogue();
 				}, false);
-				// NOTE: Referencing dialogueOption below causes it and event listener to be retained in memory
+
 			}
 
 			document.body.appendChild(div);
 		}
 	}
 
+	draw(ctx) {
+		Sprite.prototype.draw.call(this, ctx);
+		ctx.font = "30px FingerPaint";
+		ctx.fillStyle = "#F8F8FF";
+		if (this.tree != undefined) {
+			ctx.fillText("?", this.x+(this.image.width/2-6), this.y-8);
+		};
+	}
 
-	update(ctx) {
+	update(modifier) {
 		// ======================
 		//  NPC AI CODE GOES HERE
 		// ======================
