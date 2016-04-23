@@ -34,7 +34,7 @@ class Carpet extends Sprite
         // Bounce off everything
         for (var i in entities) {
 			for (var j in entities[i]) {
-                if (this.collision(entities[i][j])) {
+                if (this.collision(entities[i][j]) && entities[i][j].solid) {
                     this.angle+=4.71;
                     this.x += Math.cos(this.angle)*(this.speed*modifier);
                     this.y += Math.sin(this.angle)*(this.speed*modifier);
