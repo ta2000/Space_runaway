@@ -19,7 +19,7 @@ var Game = {
 		//when the canvas is clicked, call the click_up function
 		this.canvas.onclick = this.click_up;
 		// Load the levelURL if its not false, otherwise we load levelNum
-		this.loadLevel(Game.levelURL || "http://ta2000.github.io/Game/levels/level1.json", 0, 0, undefined, this.draw.bind(this));
+		this.loadLevel(Game.levelURL || "http://ta2000.github.io/Game/levels/level1.json", 0, 0, -1, this.draw.bind(this));
 	},
 	clear : function() {
 		Game.ctx.clearRect(0, 0, Game.canvas.width, Game.canvas.height);
@@ -150,7 +150,7 @@ var Game = {
 									}
 								}
 							}
-							if (entities[url]['entity'+i].id != undefined && entities[url]['entity'+i].id == loadPosID)
+							if (entities[url]['entity'+i].id != -1 && entities[url]['entity'+i].id == loadPosID)
 							{
 								alignmentX = (entities[url]['entity'+i].x - x);
 								alignmentY = (entities[url]['entity'+i].y - y);
