@@ -9,7 +9,7 @@
   <link href='https://fonts.googleapis.com/css?family=Ubuntu|Monda' rel='stylesheet' type='text/css'>
 </head>
 
-<body>
+<body id="body">
 
   <div class='container'>
     <div id="overText">
@@ -17,8 +17,8 @@
     </div>
 
     <div class='options'>
-      <div class='menuOption' id="main"><p>Main Menu</p></div>
-      <div class='menuOption' id='exit'><p>Exit</p></div>
+      <a href='index.html'><div class='menuOption' id="main"><p>Main Menu</p></div></a>
+      <div class='menuOption' id='exit' onclick='anAlert()'><p>Exit</p></div>
     </div>
   </div>
 
@@ -32,6 +32,50 @@
     var textToAppend = document.createTextNode(strings[randomNum]);
     para.appendChild(textToAppend);
     document.getElementById('overText').appendChild(para)
+  </script>
+
+  <script type="text/javascript">
+    function anAlert() {
+      alert('You wanted to exit the game!\nWe would close this window with code if we could, but js safety measures means that we cant :(\nPlease close it manually.');
+    }
+
+    //ALL OF THE FOLLOWING WAS AN ATTEMPT TO GET THE BACKGROUND COLOR
+    //TO GO THROUGH THE RAINBOW. IT DID NOT WORK SOON ENOUGH
+    /*var decimalNum;
+    var hexString = "#111111";
+    var i = 1418482;
+    var goingUp = true;
+
+    function convertToDecimal(string) {
+      var onlyHex = string.slice(1,7);
+      decimalNum = parseInt(onlyHex, 16);
+      console.log(decimalNum);
+    }
+
+    function convertToHex(num) {
+      var standardHexString = num.toString(16);
+      hexString = '#' + standardHexString;
+      console.log(hexString);
+    }
+
+    while(i < 12303291 && i > 1418481){
+      document.getElementById('body').style.backgroundColor = hexString;
+      convertToDecimal(hexString);
+      if (i ==  12303290) {
+        goingUp = false
+      } else if (i == 1418482) {
+        goingUp = true;
+      }
+      if (goingUp == true){
+        i ++;
+        decimalNum += 1;
+      } else {
+        i --;
+        decimalNum -= 1;
+      }
+      convertToHex(decimalNum);
+    }*/
+
   </script>
 
 </body>
