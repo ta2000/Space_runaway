@@ -129,7 +129,7 @@ var Game = {
 			if (xhttp.readyState == 4) {
 				var x = align.levelLoadOpX();
 				var y = align.levelLoadOpY();
-				var loadPosID = align.loadPosID;
+				var loadPosID = align.id;
 				var alignmentX = 0;
 				var alignmentY = 0;
 

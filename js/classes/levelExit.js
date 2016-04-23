@@ -32,7 +32,6 @@ class LevelExit extends Sprite {
 						break;
 					case "right":
 						this.levelLoadOpX = function () {
-							console.log(this, this.x);
 							return this.x + Game.scale;
 						};
 						this.levelLoadOpY = function () {
