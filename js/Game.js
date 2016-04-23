@@ -6,6 +6,7 @@ var Game = {
 	params : {},
 	then : 0,
 	mouse : {x:0,y:0,click:false},
+	trackLevelExits : {},
 	canvas : document.createElement("canvas"),
 	start : function() {
 		this.update_from_params();
@@ -40,6 +41,23 @@ var Game = {
 		var delta = now - Game.then;
 		var modifier = delta / 1000;
 
+		var exitInView = {};
+		for (var i in Game.trackLevelExits) {
+			exitInView[i] = true;
+			for (var j in Game.trackLevelExits[i]) {
+				if (Game.trackLevelExits[i][j].distance(Game.player) > (Game.canvas.width * 4)) {
+					console.log(i, "is not in view");
+					exitInView[i] = false;
+				}
+			}
+		}
+		for (var i in exitInView) {
+			if (exitInView[i] === false) {
+				console.log("Unloading level", i);
+				delete Game.trackLevelExits[i];
+				delete entities[i];
+			}
+		}
 		// Entities
 		for (var i in entities) {
 			for (var j in entities[i]) {
@@ -124,6 +142,7 @@ var Game = {
 	// Level loading and parsing
 	loadLevel : function(url, align, callback) {
 		entities[url] = {};
+		Game.trackLevelExits[url] = {};
 		var xhttp = new XMLHttpRequest();
 		xhttp.onreadystatechange = function() {
 			if (xhttp.readyState == 4) {
@@ -154,6 +173,9 @@ var Game = {
 								(level.board[i].x*Game.scale)+x,
 								(level.board[i].y*Game.scale)+y
 							);
+							if (level.board[i].className === "LevelExit") {
+								Game.trackLevelExits[url]['entity'+i] = entities[url]['entity'+i];
+							}
 							// Add other properties to entity, including dialogue
 							for (var j in level.board[i]) {
 								if (j != "className") { // Only needed for loading
