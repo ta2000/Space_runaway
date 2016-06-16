@@ -45,7 +45,7 @@ var Game = {
 			},
 			loadPosID: undefined
 		};
-		this.loadLevel(Game.levelURL || "http://ta2000.github.io/Game/levels/level1.json", firstLoad, this.draw.bind(this));
+		this.loadLevel(Game.levelURL || "http://ta2000.github.io/Space_runaway/levels/level1.json", firstLoad, this.draw.bind(this));
 	},
 	clear : function() {
 		Game.ctx.clearRect(0, 0, Game.canvas.width, Game.canvas.height);
